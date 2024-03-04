@@ -1,0 +1,4 @@
+customer:
+	g++ -std=c++11 src/customer/main.cpp src/structs.cpp src/customer/service.cpp src/customer/structs.cpp src/customer/login.cpp src/customer/database.cpp src/customer/initializekeywords.cpp src/customer/managekeywords.cpp -o main.o
+	./main.o
+
