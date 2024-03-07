@@ -38,7 +38,7 @@ int ManageMainKwd(Context ctx, string comand){
 Kwd_Man::Kwd_Man(vector<string> keywords){this->keywords = keywords;}
 string Kwd_Man::ToString(){
     string str;
-    for(int i = 0; i < this->keywords.size(); i++){
+    for(long unsigned int i = 0; i < this->keywords.size(); i++){
         str.append(this->keywords[i]);
         str.append(" (");
         str.append(to_string(i+1));

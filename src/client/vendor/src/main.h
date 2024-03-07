@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <algorithm>
 #include <../../../../con2db/pgsql.h>
+#include <../../../../con2redis/src/con2redis.h>
 
 using namespace std;
 
@@ -15,8 +16,10 @@ class Context{
     private:
         int id;
         Con2DB db;
+        redisContext *redis;
     public:
-        Context(Con2DB db);
+        Context(Con2DB db, redisContext *redis);
+        redisContext *GetRedis();
         Con2DB GetDB();
         int GetId();
 };

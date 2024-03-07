@@ -41,3 +41,5 @@ $(BDIR)/main: $(OBJ) $(DEPS)
 
 clean:
 	rm -f $(ODIR)/*.o *~ $(IDIR)/*~ core 
+	rm -f ../../../../con2redis/obj/*.o *~ ../../../../con2redis/src/*~ core 
+	rm -f ../../../../con2db/*.o *~ ../../../../con2db/src/*~ core 

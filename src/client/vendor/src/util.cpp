@@ -12,8 +12,13 @@ bool StringIsNumerical(string s){
 
 // Context
 
-Context::Context(Con2DB db){
+Context::Context(Con2DB db, redisContext *redis){
     this->db = db;
+    this->redis = redis;
+}
+
+redisContext* Context::GetRedis(){
+    return this->redis;
 }
 
 int Context::GetId(){
