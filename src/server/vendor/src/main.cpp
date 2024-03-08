@@ -21,7 +21,7 @@ int main(){
                 break;
             case 2:
                 cout << "New Insertion" << endl;
-                newInsertionMsg(reply);
+                newInsertionMsg(reply, redis);
                 break;
             case 3: 
                 cout << "Login" << endl;    
