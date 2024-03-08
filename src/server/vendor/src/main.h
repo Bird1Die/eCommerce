@@ -15,10 +15,12 @@ Con2DB CreateDB();
 
 int newRegistrationDB(string username, string email, string password);
 int newInsertionDB(string product_name, string price, string id_vendor);
+int loginDB(string email, string password);
 
 //operation
 int newRegistrationMsg(redisReply *reply, redisContext *redis);
 int newInsertionMsg(redisReply *reply, redisContext *redis);
+int loginMsg(redisReply *reply, redisContext *redis); 
 
 //utils
 bool isNumerical(string str);

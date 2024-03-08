@@ -36,7 +36,25 @@ int newInsertionMsg(redisReply *reply, redisContext *redis) {
     if (status != 0) {
         statusErrMessageRedis(redis, entry_number);
         return -1;
+    } else {
+        messageStatusOkRedis(redis, entry_number);
+       return 0; 
     }
-    
-    return 0;
+}
+
+int loginMsg(redisReply *reply, redisContext *redis) {
+    redisReply *prima_reply = reply->element[0];
+    redisReply *single_entry = prima_reply->element[1]->element[0];
+    string entry_number = single_entry->element[0]->str;
+    string email = single_entry->element[1]->element[3]->str;
+    string password = single_entry->element[1]->element[5]->str;
+
+    int id = loginDB(email, password);
+    if (id != -1) {
+       messageReturnIdRedis(redis, entry_number, to_string(id));
+       return 0; 
+    } else {
+        statusErrMessageRedis(redis, entry_number);
+        return -1;
+    }
 }

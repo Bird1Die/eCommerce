@@ -53,7 +53,6 @@ int newInsertionDB(string product_name, string price, string id_vendor) {
         real_price = floor(d_price*100)/100;
         id_int = stoi(id_vendor);
     } else {
-        //errorMessageRedis
         return -1;
     }
     
@@ -69,4 +68,18 @@ int newInsertionDB(string product_name, string price, string id_vendor) {
         return -1;
     } 
     return 0;
+}
+
+int loginDB(string email, string password) {
+    char command[200];
+    Con2DB db = CreateDB();
+    snprintf(command, sizeof(command), 
+        "SELECT id FROM Vendor WHERE email = '%s' AND password = '%s';", 
+        email.c_str(), password.c_str());
+    PGresult *result = db.ExecSQLtuples(command);
+    if (!(PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 ) {
+        return -1;
+    }
+    int id = atoi(PQgetvalue(result, 0, 0));
+    return id;
 }
