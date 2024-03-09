@@ -46,8 +46,8 @@ int Login(Context ctx){
     bool run = true;
 
     while(run){
-        reply = (redisReply*) RedisCommand(ctx.GetRedis(),
-        "XREAD COUNT 1 BLOCK 500 streams %s", rid);
+        reply = (redisReply*) RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 500 streams %s", rid);
+        // Prendere il risultato del login
     }
 
     // Se problema ritorna -2

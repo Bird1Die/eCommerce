@@ -22,9 +22,9 @@ int ManageMainKwd(Context ctx, string comand){
     switch (n)
     {
     case 1:
-        return Registration(ctx);
+        return CreateInsertion(ctx);
     case 2:
-        return Login(ctx);
+        return VisualizeInsertion(ctx);
     case 3:
         return -1;
     default:

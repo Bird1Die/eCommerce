@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <algorithm>
+#include <cmath>
 #include <../../../../con2db/pgsql.h>
 #include <../../../../con2redis/src/con2redis.h>
 
@@ -44,6 +45,10 @@ int MainService(Context ctx);
 int CreateInsertion(Context ctx);
 int VisualizeInsertion(Context ctx);
 
+// Operation
+
+int AddInsertion(Context ctx, string name, float price);
+
 // Authentication
 
 int Registration(Context ctx);
@@ -53,3 +58,4 @@ int Login(Context ctx);
 
 void Notification(string message);
 bool StringIsNumerical(string str);
+bool StringIsInLenght(string str, int min, int max);

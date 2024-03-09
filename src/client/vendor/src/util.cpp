@@ -10,6 +10,10 @@ bool StringIsNumerical(string s){
     return !s.empty() && all_of(s.begin(), s.end(), ::isdigit);
 }
 
+bool StringIsInLenght(string str, int min, int max){
+    return (str.length() >= min) && (str.length() <= max);
+}
+
 // Context
 
 Context::Context(Con2DB db, redisContext *redis){
