@@ -35,6 +35,18 @@ public:
     string ToString();
 };
 
+// Insertion
+
+class Insertion{
+private:
+    string name;
+    float price;
+public:
+    Insertion(string name, float price);
+    string GetName();
+    float GetPrice();
+};
+
 int ManageAuthenticationKwd(Context ctx, string comand);
 int ManageMainKwd(Context ctx, string comand);
 
@@ -48,6 +60,7 @@ int VisualizeInsertion(Context ctx);
 // Operation
 
 int AddInsertion(Context ctx, string name, float price);
+vector<Insertion> GetInsertion(Context ctx);
 
 // Authentication
 

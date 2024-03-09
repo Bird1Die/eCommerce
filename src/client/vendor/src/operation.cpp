@@ -7,3 +7,7 @@ int AddInsertion(Context ctx, string name, float price){
     string rid = reply->str;
     return 0;
 }
+
+vector<Insertion> GetInsertion(Context ctx){
+    
+}

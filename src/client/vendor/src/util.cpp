@@ -32,3 +32,18 @@ int Context::GetId(){
 Con2DB Context::GetDB(){
     return this->db;
 }
+
+// Insertion
+
+Insertion::Insertion(string name, float price){
+    this->name = name;
+    this->price = price;
+}
+
+string Insertion::GetName(){
+    return this->name;
+}
+
+float Insertion::GetPrice(){
+    return this->price;
+}
