@@ -102,8 +102,6 @@ int CreateInsertion(Context ctx){
         return 0;
     }
     return 0;
-
-
 }
 
 int VisualizeInsertion(Context ctx){
