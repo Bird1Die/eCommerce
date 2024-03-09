@@ -42,9 +42,7 @@ CREATE TABLE IF NOT EXISTS Customer (
         username String4VarName NOT NULL,
         password Password NOT NULL, 
         email String4Info NOT NULL,
-        phone String4Info NOT NULL,
-        shipping_address INTEGER REFERENCES ShippingAddress(id) ON DELETE SET NULL,
-        creditCard INTEGER REFERENCES CreditCard(id) ON DELETE SET NULL, 
+        shipping_address String4Info NOT NULL,
         iscrizione TIMESTAMP DEFAULT now()
 );
 
@@ -52,17 +50,14 @@ CREATE TABLE IF NOT EXISTS Vendor (
         id serial PRIMARY KEY,
         username String4VarName UNIQUE NOT NULL,
         password Password NOT NULL, 
-        email String4Info UNIQUE NOT NULL,
-        phone String4Info NOT NULL
+        email String4Info UNIQUE NOT NULL
 );
 
 
 CREATE TABLE IF NOT EXISTS Insertion (
         id serial PRIMARY KEY,
         product String4Info,
-        pr_description String4Info NOT NULL,
         price real NOT NULL,
-        shipping_costs real NOT NULL,
         instant TIMESTAMP DEFAULT now(),
         insertion_status DomainStatus DEFAULT 'available',
         vendor INTEGER REFERENCES Vendor(id) ON DELETE CASCADE
@@ -78,7 +73,9 @@ CREATE TABLE IF NOT EXISTS orders (
 
 CREATE TABLE IF NOT EXISTS Transporter (
         id serial PRIMARY KEY,
-        name String4Info NOT NULL
+        username String4Info NOT NULL,
+        email String4Info NOT NULL,
+        password String4Info NOT NULL
 );
 
 
@@ -89,8 +86,3 @@ CREATE TABLE IF NOT EXISTS Shipping (
         shipping_status ShippingStatus DEFAULT 'pendant',
         delivered  TIMESTAMP
 );
-
-
-
-
-
