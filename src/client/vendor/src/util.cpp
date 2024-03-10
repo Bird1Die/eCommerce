@@ -40,6 +40,10 @@ Con2DB Context::GetDB(){
     return this->db;
 }
 
+void Context::SetId(int id){
+    this->id = id;
+}
+
 // Insertion
 
 Insertion::Insertion(string name, float price){

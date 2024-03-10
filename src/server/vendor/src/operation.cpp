@@ -51,9 +51,11 @@ int loginMsg(redisReply *reply, redisContext *redis) {
 
     int id = loginDB(email, password);
     if (id != -1) {
-       messageReturnIdRedis(redis, entry_number, id);
-       return 0; 
+        cout << "Sending message to entry: " << entry_number << " with ID: " << id << endl;
+        messageReturnIdRedis(redis, entry_number, id);
+        return 0; 
     } else {
+        cout << "Sending message to entry: " << entry_number << " with negative result";
         statusErrMessageRedis(redis, entry_number);
         return -1;
     }
