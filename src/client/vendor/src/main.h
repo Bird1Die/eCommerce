@@ -41,12 +41,16 @@ public:
 
 class Insertion{
 private:
+    int id;
     string name;
     float price;
+    int sales;
 public:
-    Insertion(string name, float price);
+    Insertion(int id, string name, float price, int sales);
     string GetName();
     float GetPrice();
+    int GetId();
+    int GetSales();
 };
 
 int ManageAuthenticationKwd(Context ctx, string comand);

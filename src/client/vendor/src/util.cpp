@@ -46,15 +46,13 @@ void Context::SetId(int id){
 
 // Insertion
 
-Insertion::Insertion(string name, float price){
+Insertion::Insertion(int id, string name, float price, int sales){
+    this->id = id;
     this->name = name;
     this->price = price;
+    this->sales = sales;
 }
-
-string Insertion::GetName(){
-    return this->name;
-}
-
-float Insertion::GetPrice(){
-    return this->price;
-}
+string Insertion::GetName(){return this->name;}
+float Insertion::GetPrice(){return this->price;}
+int Insertion::GetId(){return this->id;}
+int Insertion::GetSales(){return this->sales;}

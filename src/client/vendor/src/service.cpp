@@ -108,5 +108,13 @@ int CreateInsertion(Context ctx){
 }
 
 int VisualizeInsertion(Context ctx){
-    return 0;
+    vector<Insertion> insertions = GetInsertion(ctx);
+    system("clear");
+    cout << "Your insertions" << endl << endl;
+    for(int i = 0; i < insertions.size(); i++){
+        Insertion ins = insertions[i];
+        cout << "Name: " << ins.GetName() << " Price: " << ins.GetPrice() << " Sales: " << ins.GetSales() << endl;
+    }
+    string comand;
+    getline(cin, comand);
 }
