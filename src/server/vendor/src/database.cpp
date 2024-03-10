@@ -80,7 +80,7 @@ int loginDB(string username, string password) {
         "SELECT id FROM Vendor WHERE username = '%s' AND password = '%s';", 
         username.c_str(), password.c_str());
     PGresult *result = db.ExecSQLtuples(command);
-    if (!(PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 ) {
+    if (!((PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 )) {
         return -1;
     }
     int id = atoi(PQgetvalue(result, 0, 0));
