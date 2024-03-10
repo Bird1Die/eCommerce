@@ -72,12 +72,13 @@ int newInsertionDB(string product_name, string price, string id_vendor) {
     return 0;
 }
 
-int loginDB(string email, string password) {
+int loginDB(string username, string password) {
+    cout << "Cerco l'utente: " << username << endl;
     char command[200];
     Con2DB db = CreateDB();
     snprintf(command, sizeof(command), 
-        "SELECT id FROM Vendor WHERE email = '%s' AND password = '%s';", 
-        email.c_str(), password.c_str());
+        "SELECT id FROM Vendor WHERE username = '%s' AND password = '%s';", 
+        username.c_str(), password.c_str());
     PGresult *result = db.ExecSQLtuples(command);
     if (!((PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 )) {
         return -1;

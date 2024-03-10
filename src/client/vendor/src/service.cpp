@@ -78,12 +78,15 @@ int CreateInsertion(Context ctx){
 
     string comand;
     getline(cin, comand);
-    if(comand.length() != 1){
+    if(comand.length() > 1 || comand.length() < 1){
         Notification("Invalid input");
         return 0;
     }
-    char com = tolower(comand[0]);
+    cout << "1" << endl;
+    char com = tolower(comand.c_str()[0]);
+    cout << "2" << endl;
     if(com == 'y'){
+        cout << "3" << endl;
         int flag = AddInsertion(ctx, name, tronc);
         if(flag == 0){
             Notification("Correctly created the insertion");

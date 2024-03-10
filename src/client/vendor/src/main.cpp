@@ -16,9 +16,9 @@ int main(){
             break;
         }
     }
-    
+    ctx.SetId(flag);
     // Main cycle
-    flag = MainService(ctx);
+    int result = MainService(ctx);
 
     return 0;
 }

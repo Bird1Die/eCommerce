@@ -56,14 +56,29 @@ int Login(Context ctx){
     getline(cin, password);
 
     redisReply *reply = (redisReply*) RedisCommand(ctx.GetRedis(),
-    "XADD vendor * operation_id 3 username %s password %s", username, password);
+    "XADD vendor * operation_id 3 username %s password %s", username.c_str(), password.c_str());
 
     string rid = reply->str;
     bool run = true;
 
     while(run){
-        reply = (redisReply*) RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 500 streams %s", rid.c_str());
-        
+        system("clear");
+        cout << "Loading..." << endl;
+        reply = (redisReply*) RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 5000 STREAMS %s $", rid.c_str());
+        if(reply->elements == 0){continue;}
+
+        redisReply *elements = (redisReply*) GetFirstEntryElements(reply);
+        string result = elements->element[1]->str;
+        if(!(result.compare("2"))){
+            Notification("Invalid credential");
+            return -2;
+        }
+        else if(!(result.compare("1"))){
+            string sid = elements->element[3]->str;
+            int id = stoi(sid);
+            Notification("Successfull login");
+            return id;
+        }
     }
 
     // Se problema ritorna -2

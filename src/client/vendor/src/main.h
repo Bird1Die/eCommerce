@@ -24,6 +24,7 @@ class Context{
         redisContext *GetRedis();
         Con2DB GetDB();
         int GetId();
+        void SetId(int id);
 };
 
 // Keywords
