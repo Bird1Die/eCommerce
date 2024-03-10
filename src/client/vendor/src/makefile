@@ -22,7 +22,8 @@ con2redis_OBJ=$(wildcard ../../../../con2redis/obj/*.o)
 con2db_OBJ=$(wildcard ../../../../con2db/*.o)
 
 
-all:	con2redis $(BDIR)/main
+all:	clean con2redis $(BDIR)/main
+
 	cd ../bin; ./main
 
 con2redis:

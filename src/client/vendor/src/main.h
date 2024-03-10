@@ -72,3 +72,4 @@ int Login(Context ctx);
 void Notification(string message);
 bool StringIsNumerical(string str);
 bool StringIsInLenght(string str, int min, int max);
+redisReply* GetFirstEntry(redisReply *reply);

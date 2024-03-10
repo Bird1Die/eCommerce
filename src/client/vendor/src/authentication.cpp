@@ -16,13 +16,19 @@ int Registration(Context ctx){
     getline(cin, password);
 
     redisReply *reply = (redisReply*) RedisCommand(ctx.GetRedis(), 
-    "XADD transporter * operation_id 1 username %s email %s password %s", username, email, password);
+    "XADD vendor * operation_id 1 username %s email %s password %s", username, email, password);
     string rid = reply->str;
+    char msg[200];
+    sprintf(msg, "Inviata entry n.%s", rid.c_str());
+    Notification(msg);
 
     bool run = false;
     while(run){
         reply = RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 500 streams %s", rid);
-        // Prendere risultato della registrazione
+        if(reply->elements == 0){continue;}
+        redisReply *entry = (redisReply*) GetFirstEntry(reply);
+        string result = entry->element[1]->element[1]->str;
+
     }
     // Se problema ritorna -2
     // Notification("Failed registration");
@@ -43,6 +49,10 @@ int Login(Context ctx){
     "XADD vendor * operation_id 3 username %s password %s", username, password);
 
     string rid = reply->str;
+    char* msg;
+    sprintf(msg, "Inviata entry n.%s", rid);
+    Notification(msg);
+
     bool run = true;
 
     while(run){

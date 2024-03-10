@@ -3,6 +3,7 @@
 
 int main(){
     redisContext *redis = redisConnect("localhost", 6379);
+    system("clear");
     bool run = true;
     while(run) {
        redisReply *reply = (redisReply*) redisCommand(redis, "XREAD COUNT 1 BLOCK 10000 STREAMS vendor $");

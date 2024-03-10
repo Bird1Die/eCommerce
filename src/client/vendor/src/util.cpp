@@ -14,6 +14,10 @@ bool StringIsInLenght(string str, int min, int max){
     return (str.length() >= min) && (str.length() <= max);
 }
 
+redisReply* GetFirstEntry(redisReply *reply){
+    return reply->element[0]->element[1]->element[0];
+}
+
 // Context
 
 Context::Context(Con2DB db, redisContext *redis){
