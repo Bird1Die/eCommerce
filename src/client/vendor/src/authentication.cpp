@@ -16,18 +16,28 @@ int Registration(Context ctx){
     getline(cin, password);
 
     redisReply *reply = (redisReply*) RedisCommand(ctx.GetRedis(), 
-    "XADD vendor * operation_id 1 username %s email %s password %s", username, email, password);
+    "XADD vendor * operation_id 1 username %s email %s password %s", username.c_str(), email.c_str(), password.c_str());
     string rid = reply->str;
-    char msg[200];
-    sprintf(msg, "Inviata entry n.%s", rid.c_str());
-    Notification(msg);
 
-    bool run = false;
+    bool run = true;
     while(run){
-        reply = RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 500 streams %s", rid);
+        system("clear");
+        cout << "Loading..." << endl;
+        reply = RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 5000 STREAMS %s $", rid.c_str());
         if(reply->elements == 0){continue;}
-        redisReply *entry = (redisReply*) GetFirstEntry(reply);
-        string result = entry->element[1]->element[1]->str;
+        redisReply *elements = (redisReply*) GetFirstEntryElements(reply);
+
+        string result = elements->element[1]->str;
+        if(!(result.compare("2"))){
+            Notification("Failed registration");
+            return -2;
+        }
+        else if(!(result.compare("1"))){
+            string sid = elements->element[3]->str;
+            int id = stoi(sid);
+            Notification("Successfull registration");
+            return id;
+        }
 
     }
     // Se problema ritorna -2
@@ -49,15 +59,11 @@ int Login(Context ctx){
     "XADD vendor * operation_id 3 username %s password %s", username, password);
 
     string rid = reply->str;
-    char* msg;
-    sprintf(msg, "Inviata entry n.%s", rid);
-    Notification(msg);
-
     bool run = true;
 
     while(run){
-        reply = (redisReply*) RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 500 streams %s", rid);
-        // Prendere il risultato del login
+        reply = (redisReply*) RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 500 streams %s", rid.c_str());
+        
     }
 
     // Se problema ritorna -2

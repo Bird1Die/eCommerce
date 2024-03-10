@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <algorithm>
+#include <string>
 #include <cmath>
 #include <../../../../con2db/pgsql.h>
 #include <../../../../con2redis/src/con2redis.h>
@@ -73,3 +74,4 @@ void Notification(string message);
 bool StringIsNumerical(string str);
 bool StringIsInLenght(string str, int min, int max);
 redisReply* GetFirstEntry(redisReply *reply);
+redisReply* GetFirstEntryElements(redisReply *reply);

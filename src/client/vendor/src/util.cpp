@@ -18,6 +18,9 @@ redisReply* GetFirstEntry(redisReply *reply){
     return reply->element[0]->element[1]->element[0];
 }
 
+redisReply* GetFirstEntryElements(redisReply *reply){
+    return reply->element[0]->element[1]->element[0]->element[1];
+}
 // Context
 
 Context::Context(Con2DB db, redisContext *redis){

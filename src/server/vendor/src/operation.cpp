@@ -14,7 +14,7 @@ int newRegistrationMsg(redisReply *reply, redisContext *redis) {
         statusErrMessageRedis(redis, entry_number);
         return -1;
     }
-    messageReturnIdRedis(redis, entry_number, to_string(id_vendor));
+    messageReturnIdRedis(redis, entry_number, id_vendor);
     return 0; 
 
 }
@@ -51,7 +51,7 @@ int loginMsg(redisReply *reply, redisContext *redis) {
 
     int id = loginDB(email, password);
     if (id != -1) {
-       messageReturnIdRedis(redis, entry_number, to_string(id));
+       messageReturnIdRedis(redis, entry_number, id);
        return 0; 
     } else {
         statusErrMessageRedis(redis, entry_number);
