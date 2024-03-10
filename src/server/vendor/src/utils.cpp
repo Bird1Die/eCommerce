@@ -24,8 +24,8 @@ bool isIntNumerical(string str) {
     }
 }
 
-int messageReturnIdRedis(redisContext *redis, string id_entry, string iduser) {
-    redisCommand(redis, "XADD %s * operation_id 1 iduser %s", id_entry, iduser);
+int messageReturnIdRedis(redisContext *redis, string id_entry, int iduser) {
+    redisCommand(redis, "XADD %s * operation_id 1 iduser %d", id_entry.c_str(), iduser);
     return 0;
 }
 

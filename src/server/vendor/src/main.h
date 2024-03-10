@@ -25,6 +25,6 @@ int loginMsg(redisReply *reply, redisContext *redis);
 //utils
 bool isNumerical(string str);
 bool isIntNumerical(string str);
-int messageReturnIdRedis(redisContext *redis, string id_entry, string iduser);
+int messageReturnIdRedis(redisContext *redis, string id_entry, int iduser);
 int statusErrMessageRedis(redisContext *redis, string id_entry);
 int messageStatusOkRedis(redisContext *redis, string id_entry);

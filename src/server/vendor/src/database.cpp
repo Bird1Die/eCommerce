@@ -9,6 +9,8 @@ Con2DB CreateDB(){
 int newRegistrationDB(string username, string email, string password) {
     Con2DB db = CreateDB();
 
+    cout << "Username: " << username << endl << "Email: " << email << endl << "Password: "<< password <<endl;
+
     char command[200];
     sprintf(command, "BEGIN"); 
     PGresult *result = db.ExecSQLcmd(command);
