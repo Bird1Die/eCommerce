@@ -1,6 +1,9 @@
 #include "main.h"
 #include <unistd.h>
 
+/*
+redis server listening requests from redis vendor client.
+*/
 int main(){
     redisContext *redis = redisConnect("localhost", 6379);
     system("clear");

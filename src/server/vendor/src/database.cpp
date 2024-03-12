@@ -6,6 +6,10 @@ Con2DB CreateDB(){
     return db;
 }
 
+/*
+create a new vendor within the database with username, email and password 
+received from redis client. It returns the new vendor's id.
+*/
 int newRegistrationDB(string username, string email, string password) {
     Con2DB db = CreateDB();
 
@@ -46,6 +50,10 @@ int newRegistrationDB(string username, string email, string password) {
     return id;
 }
 
+/*
+create a new insertion within the databse with product_name, price and id_vendor received
+from the redis client.
+*/
 int newInsertionDB(string product_name, string price, string id_vendor) {
     double real_price;
     int id_int;
@@ -72,6 +80,10 @@ int newInsertionDB(string product_name, string price, string id_vendor) {
     return 0;
 }
 
+/*
+login by searching within the database an entity with the same username and password as given 
+in the redis message. It returns id of the entity.
+*/
 int loginDB(string username, string password) {
     cout << "Cerco l'utente: " << username << endl;
     char command[200];

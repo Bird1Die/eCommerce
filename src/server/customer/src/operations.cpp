@@ -1,5 +1,9 @@
 #include "main.h"
 
+/*
+analyzes the message extracting the necessary informations that will be used to add
+the new customer into the database. It sends a message to the new customer whit their id.
+*/
 int newRegistrationMsg(redisReply *reply, redisContext *redis) {
     redisReply *prima_reply = reply->element[0];
     redisReply *single_entry = prima_reply->element[1]->element[0];
@@ -25,6 +29,11 @@ int newRegistrationMsg(redisReply *reply, redisContext *redis) {
 
 }
 
+/*
+analyzes the message extracting the necessary informations that will be used to add a new 
+order into the database. A message is sent to the redis customer client to confirm the successful 
+operation and to the transporter to create a new shipping.
+*/
 int newOrderMsg(redisReply *reply, redisContext *redis) {
     redisReply *prima_reply = reply->element[0];
     redisReply *single_entry = prima_reply->element[1]->element[0];
@@ -50,6 +59,11 @@ int newOrderMsg(redisReply *reply, redisContext *redis) {
     }
 }
 
+/*
+analyzes the message extracting the necessary informations that will be used to search
+user credentials inside the database. A message is sent to the redis customer client to 
+confirm the seccussful operation including the customer's id.
+*/
 int loginMsg(redisReply *reply, redisContext *redis) {
     redisReply *prima_reply = reply->element[0];
     redisReply *single_entry = prima_reply->element[1]->element[0];

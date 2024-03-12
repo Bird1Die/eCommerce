@@ -1,5 +1,8 @@
 #include "main.h"
 
+/*
+redis server listening requests from redis customer client.
+*/
 int main() {
     redisContext *redis = redisConnect("localhost", 6379);
     system("clear");
@@ -25,7 +28,7 @@ int main() {
                 break;
             case 3: 
                 cout << "Login" << endl;   
-                //loginMsg(reply, redis); 
+                loginMsg(reply, redis); 
                 break;
             }
         }

@@ -1,5 +1,9 @@
 #include "main.h"
 
+/*
+analyzes the message extracting the necessary informations that will be used to add
+the new vendor into the database. It sends a message to the new vendor whit their id.
+*/
 int newRegistrationMsg(redisReply *reply, redisContext *redis) {
     redisReply *prima_reply = reply->element[0];
     redisReply *single_entry = prima_reply->element[1]->element[0];
@@ -19,6 +23,11 @@ int newRegistrationMsg(redisReply *reply, redisContext *redis) {
 
 }
 
+/*
+analyzes the message extracting the necessary informations that will be used to add a new 
+insertion into the database. A message is sent to the redis vendor client to confirm the successful 
+operation.
+*/
 int newInsertionMsg(redisReply *reply, redisContext *redis) {
     //"XADD vendor * operation_id 2 product_name %s price %s id_vendor %s"
     redisReply *prima_reply = reply->element[0];
@@ -42,6 +51,11 @@ int newInsertionMsg(redisReply *reply, redisContext *redis) {
     }
 }
 
+/*
+analyzes the message extracting the necessary informations that will be used to search
+user credentials inside the database. A message is sent to the redis vendor client to 
+confirm the seccussful operation including the vendor's id.
+*/
 int loginMsg(redisReply *reply, redisContext *redis) {
     redisReply *prima_reply = reply->element[0];
     redisReply *single_entry = prima_reply->element[1]->element[0];
