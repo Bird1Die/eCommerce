@@ -1,21 +1,24 @@
 #include "main.h"
 
 int main(){
-    Context ctx = Context();
+    redisContext *redis = redisConnect("localhost", 6379);
+    Con2DB db = Con2DB("localhost", "5432", "ecommerce", "47002", "myecommerce");
+    Context ctx = Context(db, redis);    
     bool run = true;
-    vector<string> keywords = {"Registration", "Login", "Exit"};
-    Kwd_Man kwd = Kwd_Man(keywords);
+    int flag;
     while(run){
-        system("clear");
-        cout << kwd.ToString() << endl;
-
-        string comand;
-        getline(cin, comand);
-
-        int flag = ManageAuthenticationKwd(ctx, comand);
+        flag = AuthenticationService(ctx);
         if(flag == -1){
             run = false;
+            return 0;
+        }
+        if(flag >= 0){
+            break;
         }
     }
+    ctx.SetId(flag);
+    // Main cycle
+    int result = MainService(ctx);
+
     return 0;
 }
