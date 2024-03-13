@@ -1,0 +1,6 @@
+src/server/customer/obj/
+src/server/vendor/obj/
+src/server/transporter/obj/
+src/client/customer/obj/
+src/client/vendor/obj/
+src/client/transporter/obj/
