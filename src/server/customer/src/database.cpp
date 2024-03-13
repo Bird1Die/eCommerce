@@ -7,12 +7,11 @@ Con2DB CreateDB(){
 }
 
 /*
-create a new vendor within the database with username, email and password 
-received from redis client. It returns the new vendor's id.
+create a new customer within the database with username, email, password and shipping address
+received from redis client. It returns new user's id.
 */
-int newRegistrationDB(string username, string email, string password) {
+int newRegistrationDB(string username, string email, string password, string shipping_address) {
     Con2DB db = CreateDB();
-
     cout << "Username: " << username << endl << "Email: " << email << endl << "Password: "<< password <<endl;
 
     char command[200];
@@ -20,22 +19,22 @@ int newRegistrationDB(string username, string email, string password) {
     PGresult *result = db.ExecSQLcmd(command);
 
     snprintf(command, sizeof(command), 
-        "SELECT * FROM Vendor WHERE email = '%s';", email.c_str());
+        "SELECT * FROM Customer WHERE email = '%s';", email.c_str());
     result = db.ExecSQLtuples(command);
     if (PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result) > 0) {
         return -1;
     }
 
     snprintf(command, sizeof(command), 
-        "SELECT * FROM Vendor WHERE username = '%s';", username.c_str());
+        "SELECT * FROM Customer WHERE username = '%s';", username.c_str());
     result = db.ExecSQLtuples(command);
     if (PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result) > 0) {
         return -1;
     }
     
     snprintf(command, sizeof(command),
-     "INSERT INTO vendor (username, password, email) VALUES ('%s', '%s', '%s') RETURNING id;", 
-      username.c_str(), password.c_str(), email.c_str());
+     "INSERT INTO Customer (username, password, email, shipping_address) VALUES ('%s', '%s', '%s', '%s') RETURNING id;", 
+      username.c_str(), password.c_str(), email.c_str(), shipping_address.c_str());
     
    
     result = db.ExecSQLtuples(command);
@@ -50,34 +49,29 @@ int newRegistrationDB(string username, string email, string password) {
     return id;
 }
 
+
 /*
-create a new insertion within the databse with product_name, price and id_vendor received
-from the redis client.
+create a new order within the databse with id_product, quantity and id_customer received
+from the redis client. It returns new order's id.
 */
-int newInsertionDB(string product_name, string price, string id_vendor) {
-    double real_price;
-    int id_int;
-    if(isNumerical(price) && isIntNumerical(id_vendor)){
-        //price = atof(price.c_str());
-        double d_price = stod(price);
-        real_price = floor(d_price*100)/100;
-        id_int = stoi(id_vendor);
-    } else {
-        return -1;
-    }
-    
-    char command[200];
+int newOrderDB(string id_product, string quantity, string id_customer) {
     Con2DB db = CreateDB();
 
+    int id_p = stoi(id_product);
+    int qty = stoi(quantity);
+    int id_c = stoi(id_customer);
+
+    char command[200];
     snprintf(command, sizeof(command), 
-     "INSERT INTO Insertion (product, price, vendor) VALUES ('%s', '%f', '%d');",
-     product_name.c_str(), real_price, id_int);
-    
-    PGresult *result = db.ExecSQLcmd(command);
-    if (!(PQresultStatus(result) == PGRES_COMMAND_OK)) {
+    "INSERT INTO orders (product, quantity, customer) VALUES ('%d', '%d', '%d') RETURNING id", id_p, qty, id_c );
+    PGresult *result = db.ExecSQLtuples(command);
+    if (PQresultStatus(result) != PGRES_TUPLES_OK) {
         return -1;
-    } 
-    return 0;
+    }  
+
+    int id = atoi(PQgetvalue(result, 0, 0));
+    //PQclear(result);
+    return id;
 }
 
 /*
@@ -89,7 +83,7 @@ int loginDB(string username, string password) {
     char command[200];
     Con2DB db = CreateDB();
     snprintf(command, sizeof(command), 
-        "SELECT id FROM Vendor WHERE username = '%s' AND password = '%s';", 
+        "SELECT id FROM Customer WHERE username = '%s' AND password = '%s';", 
         username.c_str(), password.c_str());
     PGresult *result = db.ExecSQLtuples(command);
     if (!((PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 )) {

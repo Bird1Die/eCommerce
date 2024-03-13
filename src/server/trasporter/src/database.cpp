@@ -7,7 +7,7 @@ Con2DB CreateDB(){
 }
 
 /*
-create a new vendor within the database with username, email and password 
+create a new transporter within the database with username, email and password 
 received from redis client. It returns the new vendor's id.
 */
 int newRegistrationDB(string username, string email, string password) {
@@ -20,21 +20,21 @@ int newRegistrationDB(string username, string email, string password) {
     PGresult *result = db.ExecSQLcmd(command);
 
     snprintf(command, sizeof(command), 
-        "SELECT * FROM Vendor WHERE email = '%s';", email.c_str());
+        "SELECT * FROM transporter WHERE email = '%s';", email.c_str());
     result = db.ExecSQLtuples(command);
     if (PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result) > 0) {
         return -1;
     }
 
     snprintf(command, sizeof(command), 
-        "SELECT * FROM Vendor WHERE username = '%s';", username.c_str());
+        "SELECT * FROM transporter WHERE username = '%s';", username.c_str());
     result = db.ExecSQLtuples(command);
     if (PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result) > 0) {
         return -1;
     }
     
     snprintf(command, sizeof(command),
-     "INSERT INTO vendor (username, password, email) VALUES ('%s', '%s', '%s') RETURNING id;", 
+     "INSERT INTO transporter (username, password, email) VALUES ('%s', '%s', '%s') RETURNING id;", 
       username.c_str(), password.c_str(), email.c_str());
     
    
@@ -51,33 +51,43 @@ int newRegistrationDB(string username, string email, string password) {
 }
 
 /*
-create a new insertion within the databse with product_name, price and id_vendor received
+create a new shipping within the databse with id_order received
 from the redis client.
 */
-int newInsertionDB(string product_name, string price, string id_vendor) {
-    double real_price;
-    int id_int;
-    if(isNumerical(price) && isIntNumerical(id_vendor)){
-        //price = atof(price.c_str());
-        double d_price = stod(price);
-        real_price = floor(d_price*100)/100;
-        id_int = stoi(id_vendor);
-    } else {
-        return -1;
-    }
-    
-    char command[200];
+int newShippingDB(string id_order) {
     Con2DB db = CreateDB();
 
-    snprintf(command, sizeof(command), 
-     "INSERT INTO Insertion (product, price, vendor) VALUES ('%s', '%f', '%d');",
-     product_name.c_str(), real_price, id_int);
-    
-    PGresult *result = db.ExecSQLcmd(command);
-    if (!(PQresultStatus(result) == PGRES_COMMAND_OK)) {
+    int id_transporter = queryShippingToTransporter();
+    if (id_transporter < 0) {
         return -1;
-    } 
+    }
+
+    char command[200];
+    snprintf(command, sizeof(command), 
+    "INSERT INTO shipping (number_order, transporter) VALUES (%d, %d)", id_order, id_transporter);
+    PGresult *result = db.ExecSQLcmd(command);
+    if (PQresultStatus(result) != PGRES_COMMAND_OK) {
+        return -1;
+    }
     return 0;
+}
+
+/*
+query to find a transporter with the fewest shipping loaded. It returns the transporter'id.
+*/
+int queryShippingToTransporter() {
+    Con2DB db = CreateDB();
+    char command[200];
+    snprintf(command, sizeof(command),
+    "Select t.id, count (s.id) as ship From transporter t left outer join shipping s on s.transporter = t.id group by t.id Order by ship asc");
+    
+    PGresult *result = db.ExecSQLtuples(command);
+    if (PQresultStatus(result) != PGRES_TUPLES_OK) {
+        return -1;
+    }
+
+    int id_transporter = atoi(PQgetvalue(result, 0, 0));
+    return id_transporter;
 }
 
 /*
@@ -89,7 +99,7 @@ int loginDB(string username, string password) {
     char command[200];
     Con2DB db = CreateDB();
     snprintf(command, sizeof(command), 
-        "SELECT id FROM Vendor WHERE username = '%s' AND password = '%s';", 
+        "SELECT id FROM transporter WHERE username = '%s' AND password = '%s';", 
         username.c_str(), password.c_str());
     PGresult *result = db.ExecSQLtuples(command);
     if (!((PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 )) {

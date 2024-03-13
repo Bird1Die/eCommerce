@@ -1,5 +1,4 @@
 #include "main.h"
-#include <unistd.h>
 
 /*
 redis server listening requests from redis vendor client.
@@ -9,7 +8,7 @@ int main(){
     system("clear");
     bool run = true;
     while(run) {
-       redisReply *reply = (redisReply*) redisCommand(redis, "XREAD COUNT 1 BLOCK 10000 STREAMS vendor $");
+       redisReply *reply = (redisReply*) redisCommand(redis, "XREAD COUNT 1 BLOCK 10000 STREAMS transporter $");
         if (reply->elements != 0){
         redisReply *prima_reply = reply->element[0];
         cout << "Stream name: " << prima_reply->element[0]->str << endl;
@@ -24,13 +23,16 @@ int main(){
                 newRegistrationMsg(reply, redis);
                 break;
             case 2:
-                cout << "New Insertion" << endl;
-                newInsertionMsg(reply, redis);
+                cout << "Change shipping status" << endl;
+                //changeShippingStatusMsg(reply, redis);
                 break;
             case 3: 
                 cout << "Login" << endl;   
                 loginMsg(reply, redis); 
                 break;
+            case 4:
+                cout << "New Shipping" << endl;
+                newShippingMsg(reply, redis);
             }
         }
     } 
