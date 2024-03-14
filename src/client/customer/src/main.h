@@ -16,11 +16,14 @@ int main();
 
 class Context{
     private:
+        bool debug;
         int id;
         Con2DB db;
         redisContext *redis;
     public:
         Context(Con2DB db, redisContext *redis);
+        bool GetDebug();
+        void SetDebug(bool debug);
         redisContext *GetRedis();
         Con2DB GetDB();
         int GetId();
@@ -60,13 +63,13 @@ int ManageMainKwd(Context ctx, string comand);
 
 int AuthenticationService(Context ctx);
 int MainService(Context ctx);
-int CreateInsertion(Context ctx);
-int VisualizeInsertion(Context ctx);
+int SearchProduct(Context ctx);
+int VisualizeOrders(Context ctx);
 
 // Operation
 
-int AddInsertion(Context ctx, string name, float price);
-vector<Insertion> GetInsertion(Context ctx);
+vector<Insertion> GetProductList(Context ctx, string name);
+vector<Insertion> GetOrderList(Context ctx);
 
 // Authentication
 

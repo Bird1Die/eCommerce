@@ -22,9 +22,9 @@ int ManageMainKwd(Context ctx, string comand){
     switch (n)
     {
     case 1:
-        return CreateInsertion(ctx);
+        return SearchProduct(ctx);
     case 2:
-        return VisualizeInsertion(ctx);
+        return VisualizeOrders(ctx);
     case 3:
         return -1;
     default:

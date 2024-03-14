@@ -27,19 +27,21 @@ Context::Context(Con2DB db, redisContext *redis){
     this->db = db;
     this->redis = redis;
 }
-
+bool Context::GetDebug(){
+    return this->debug;
+}
+void Context::SetDebug(bool debug){
+    this->debug = debug;
+}
 redisContext* Context::GetRedis(){
     return this->redis;
 }
-
 int Context::GetId(){
     return this->id;
 }
-
 Con2DB Context::GetDB(){
     return this->db;
 }
-
 void Context::SetId(int id){
     this->id = id;
 }

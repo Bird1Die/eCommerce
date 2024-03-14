@@ -3,7 +3,8 @@
 int main(){
     redisContext *redis = redisConnect("localhost", 6379);
     Con2DB db = Con2DB("localhost", "5432", "ecommerce", "47002", "myecommerce");
-    Context ctx = Context(db, redis);    
+    Context ctx = Context(db, redis);  
+    ctx.SetDebug(true);  
     bool run = true;
     int flag;
     while(run){

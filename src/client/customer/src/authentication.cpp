@@ -1,6 +1,7 @@
 #include "main.h"
 
 int Registration(Context ctx){
+    if(ctx.GetDebug()){return 1;}
     system("clear");
 
     cout << "Email: ";

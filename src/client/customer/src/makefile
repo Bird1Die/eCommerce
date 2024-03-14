@@ -25,6 +25,8 @@ con2db_OBJ=$(wildcard ../../../../con2db/*.o)
 all:	clean con2redis $(BDIR)/main
 
 	cd ../bin; ./main
+	$(MAKE) -C . clean
+	clear
 
 con2redis:
 	$(MAKE) -C ../../../../con2redis/src
@@ -42,5 +44,6 @@ $(BDIR)/main: $(OBJ) $(DEPS)
 
 clean:
 	rm -f $(ODIR)/*.o *~ $(IDIR)/*~ core 
+	rm -f ../bin/main
 	rm -f ../../../../con2redis/obj/*.o *~ ../../../../con2redis/src/*~ core 
 	rm -f ../../../../con2db/*.o *~ ../../../../con2db/src/*~ core 
