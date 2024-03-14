@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <string>
 #include <cmath>
+#include <stdio.h>
+#include <termios.h>
 #include <../../../../con2db/pgsql.h>
 #include <../../../../con2redis/src/con2redis.h>
 
@@ -32,9 +34,15 @@ class Context{
 class Kwd_Man{
 private:
     vector<string> keywords;
+    int selected;
 public:
     Kwd_Man(vector<string>);
     string ToString();
+    void Previous();
+    void Next();
+    int GetSelected();
+    int GetComandId();
+    int GetComandId(string msg);
 };
 
 // Insertion
@@ -53,8 +61,8 @@ public:
     int GetSales();
 };
 
-int ManageAuthenticationKwd(Context ctx, string comand);
-int ManageMainKwd(Context ctx, string comand);
+int ManageAuthenticationKwd(Context ctx, int comand);
+int ManageMainKwd(Context ctx, int comand);
 
 // Service
 
@@ -80,3 +88,4 @@ bool StringIsNumerical(string str);
 bool StringIsInLenght(string str, int min, int max);
 redisReply* GetFirstEntry(redisReply *reply);
 redisReply* GetFirstEntryElements(redisReply *reply);
+char getch();

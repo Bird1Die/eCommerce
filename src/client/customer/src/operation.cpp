@@ -19,5 +19,25 @@ vector<Insertion> GetProductList(Context ctx, string name){
     return insertions;
 }
 
+bool CreateOrder(Context ctx, Insertion ins, int quantity){
+    system("clear");
+    cout << "Creating order..." << endl;
+    redisReply *reply = RedisCommand(ctx.GetRedis(), 
+    "XADD customer * operation_id 2 id_product %d quantity %d id_customer %d", ins.GetId(), quantity, ctx.GetId());
+    string rid = reply->str;
+    while(true){
+        reply = RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 5000 STREAMS %s $", rid.c_str());
+        if(reply->elements == 0){continue;}
+        redisReply *elements = (redisReply*) GetFirstEntryElements(reply);
+        string result = elements->element[1]->str;
+        
+        if(!result.compare("3")){return true;}
+        else{return false;}
+    }
+
+}
+
 vector<Insertion> GetOrderList(Context ctx){
+    vector<Insertion> s;
+    return s;
 }

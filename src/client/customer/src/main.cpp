@@ -4,7 +4,7 @@ int main(){
     redisContext *redis = redisConnect("localhost", 6379);
     Con2DB db = Con2DB("localhost", "5432", "ecommerce", "47002", "myecommerce");
     Context ctx = Context(db, redis);  
-    ctx.SetDebug(true);  
+    ctx.SetDebug(false);  
     bool run = true;
     int flag;
     while(run){
@@ -18,8 +18,8 @@ int main(){
         }
     }
     ctx.SetId(flag);
+
     // Main cycle
     int result = MainService(ctx);
-
-    return 0;
+    return result;
 }
