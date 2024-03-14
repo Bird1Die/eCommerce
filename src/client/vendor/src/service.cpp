@@ -2,16 +2,10 @@
 
 int AuthenticationService(Context ctx){
     bool run = true;
-    vector<string> keywords = {"Registration", "Login", "Exit"};
-    Kwd_Man kwd = Kwd_Man(keywords);
+    Kwd_Man kwd = Kwd_Man({"Registration", "Login", "Exit"});
     int flag = -2;
     while(run){
-        system("clear");
-        cout << kwd.ToString() << endl;
-
-        string comand;
-        getline(cin, comand);
-
+        int comand = kwd.GetComandId();
         flag = ManageAuthenticationKwd(ctx, comand);
         if(flag == -1){
             run = false;
@@ -25,14 +19,9 @@ int AuthenticationService(Context ctx){
 
 int MainService(Context ctx){
     bool run = true;
-    vector<string> keywords = {"Create insertion", "Visualize insertions", "Exit"};
-    Kwd_Man kwm = Kwd_Man(keywords);
+    Kwd_Man kwm = Kwd_Man({"Create insertion", "Visualize insertions", "Exit"});
     while(run){
-        system("clear");
-        cout << kwm.ToString() << endl;
-
-        string comand; 
-        getline(cin, comand);
+        int comand = kwm.GetComandId();
 
         int flag = ManageMainKwd(ctx, comand);
 
@@ -76,17 +65,9 @@ int CreateInsertion(Context ctx){
     cout << "Price: " << tronc << "$" << endl << endl;
     cout << "Add this insertion? (Y/n)" << endl;
 
-    string comand;
-    getline(cin, comand);
-    if(comand.length() > 1 || comand.length() < 1){
-        Notification("Invalid input");
-        return 0;
-    }
-    cout << "1" << endl;
-    char com = tolower(comand.c_str()[0]);
-    cout << "2" << endl;
-    if(com == 'y'){
-        cout << "3" << endl;
+    Kwd_Man kw = Kwd_Man({"Y", "n"});
+    int comand = kw.GetComandId();
+    if(comand == 0){
         int flag = AddInsertion(ctx, name, tronc);
         if(flag == 0){
             Notification("Correctly created the insertion");
@@ -97,7 +78,7 @@ int CreateInsertion(Context ctx){
             return 0;
         }
     }
-    else if(com == 'n'){
+    else if(comand == 1){
         Notification("Cancello il prodotto");
     }
     else{

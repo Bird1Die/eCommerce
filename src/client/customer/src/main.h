@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <string>
 #include <cmath>
+#include <termios.h>
+#include <stdio.h>
 #include <../../../../con2db/pgsql.h>
 #include <../../../../con2redis/src/con2redis.h>
 
@@ -16,11 +18,14 @@ int main();
 
 class Context{
     private:
+        bool debug;
         int id;
         Con2DB db;
         redisContext *redis;
     public:
         Context(Con2DB db, redisContext *redis);
+        bool GetDebug();
+        void SetDebug(bool debug);
         redisContext *GetRedis();
         Con2DB GetDB();
         int GetId();
@@ -29,12 +34,32 @@ class Context{
 
 // Keywords
 
+class V_Kwd_Man{
+private:
+    vector<string> keywords;
+    long unsigned int selected;
+public:
+    V_Kwd_Man(vector<string> keywords);
+    string ToString();
+    void Previous();
+    void Next();
+    int GetSelected();
+    int GetComandId();
+    int GetComandId(string msg);
+};
+
 class Kwd_Man{
 private:
     vector<string> keywords;
+    long unsigned int selected;
 public:
-    Kwd_Man(vector<string>);
+    Kwd_Man(vector<string> keywords);
     string ToString();
+    void Previous();
+    void Next();
+    int GetSelected();
+    int GetComandId();
+    int GetComandId(string msg);
 };
 
 // Insertion
@@ -47,26 +72,31 @@ private:
     int sales;
 public:
     Insertion(int id, string name, float price, int sales);
+    string ToString();
+    string ToString(int n_char, int n_price);
     string GetName();
     float GetPrice();
     int GetId();
     int GetSales();
 };
 
-int ManageAuthenticationKwd(Context ctx, string comand);
-int ManageMainKwd(Context ctx, string comand);
+int ManageAuthenticationKwd(Context ctx, int comand);
+int ManageMainKwd(Context ctx, int comand);
 
 // Service
 
 int AuthenticationService(Context ctx);
 int MainService(Context ctx);
-int CreateInsertion(Context ctx);
-int VisualizeInsertion(Context ctx);
+int SearchProduct(Context ctx);
+int VisualizeInsertion(Context ctx, Insertion ins);
+int CreatingOrderService(Context ctx, Insertion ins);
+int VisualizeOrders(Context ctx);
 
 // Operation
 
-int AddInsertion(Context ctx, string name, float price);
-vector<Insertion> GetInsertion(Context ctx);
+vector<Insertion> GetProductList(Context ctx, string name);
+vector<Insertion> GetOrderList(Context ctx);
+bool CreateOrder(Context ctx, Insertion ins, int quantity);
 
 // Authentication
 
@@ -80,3 +110,17 @@ bool StringIsNumerical(string str);
 bool StringIsInLenght(string str, int min, int max);
 redisReply* GetFirstEntry(redisReply *reply);
 redisReply* GetFirstEntryElements(redisReply *reply);
+char getch();
+
+// Boh
+
+class Spinner{
+private:
+    int quantity;
+    bool negative;
+public:
+    Spinner(bool negative);
+    string ToString();
+    int GetQuantity();
+    int GetQuantity(string msg);
+};
