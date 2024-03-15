@@ -123,5 +123,10 @@ int requestShippingDB(int id_transporter) {
     }
     int id_order = atoi(PQgetvalue(result, 0, 0));
     snprintf(command, sizeof(command),
-    "INSERT INTO shipping ()")
+    "INSERT INTO shipping (id_order, transporter) VALUES (%d, %d)", id_order, id_transporter);
+    result = db.ExecSQLcmd(command);
+    if (PQresultStatus(result) != PGRES_COMMAND_OK) {
+        return -1;
+    }
+    return 0;
 }
