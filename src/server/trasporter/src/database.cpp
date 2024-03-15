@@ -74,7 +74,7 @@ int newShippingDB(string id_order) {
 
 /*
 query to find a transporter with the fewest shipping loaded. It returns the transporter'id.
-*/
+
 int queryShippingToTransporter() {
     Con2DB db = CreateDB();
     char command[200];
@@ -89,6 +89,7 @@ int queryShippingToTransporter() {
     int id_transporter = atoi(PQgetvalue(result, 0, 0));
     return id_transporter;
 }
+*/
 
 /*
 login by searching within the database an entity with the same username and password as given 
@@ -107,4 +108,20 @@ int loginDB(string username, string password) {
     }
     int id = atoi(PQgetvalue(result, 0, 0));
     return id;
+}
+
+int requestShippingDB(int id_transporter) {
+    system("clear");
+    cout << "Cerco un ordine pronto per la spedizione..." << endl;
+    char command[200];
+    Con2DB db = CreateDB();
+    snprintf(command, sizeof(command),
+    "SELECT o.id FROM orders o WHERE o.assigned='false' ORDER BY o.instant_date ASC");
+    PGresult *result = db.ExecSQLtuples(command);
+    if (!((PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 )) {
+        return -1;
+    }
+    int id_order = atoi(PQgetvalue(result, 0, 0));
+    snprintf(command, sizeof(command),
+    "INSERT INTO shipping ()")
 }

@@ -23,6 +23,16 @@ int newRegistrationMsg(redisReply *reply, redisContext *redis) {
 
 }
 
+int requestShippingMsg(redisReply *reply, redisContext *redis) {
+    redisReply *prima_reply = reply->element[0];
+    redisReply *single_entry = prima_reply->element[1]->element[0];
+    string entry_number = single_entry->element[0]->str;
+    string id_transporter = single_entry->element[1]->element[3]->str;
+
+    int id_order = requestShippingDB(stoi(id_transporter));
+    
+}
+
 /*
 analyzes the message extracting the necessary informations that will be used to add
 the new shipping into the database. 

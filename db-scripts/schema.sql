@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS Transporter (
 
 CREATE TABLE IF NOT EXISTS Shipping (
         id serial PRIMARY KEY,
-        number_order INTEGER REFERENCES orders(id) ON DELETE CASCADE,
+        id_order INTEGER REFERENCES orders(id) ON DELETE CASCADE,
         transporter INTEGER REFERENCES Transporter(id) ON DELETE SET NULL,
         shipping_status ShippingStatus DEFAULT 'pendant',
         delivered  TIMESTAMP
