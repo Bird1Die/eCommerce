@@ -20,22 +20,6 @@ CREATE TYPE DomainStatus AS ENUM ('available', 'unavailable');
 
 CREATE TYPE ShippingStatus AS ENUM ('pendant', 'delivering', 'delivered');
 
-CREATE TABLE IF NOT EXISTS ShippingAddress (
-        id serial PRIMARY KEY,
-        address String4Info NOT NULL,
-        house_number String4Info NOT NULL,
-        CAP DomainCap NOT NULL,
-        entryphone String4Info NOT NULL,
-        note String4Info
-);
-
-CREATE TABLE IF NOT EXISTS CreditCard (
-        id serial PRIMARY KEY,
-        number char(16) NOT NULL,
-        name String4Info NOT NULL,
-        expiration_date VARCHAR(5) NOT NULL,
-        cvc char(3) NOT NULL
-);
 
 CREATE TABLE IF NOT EXISTS Customer (
         id serial PRIMARY KEY,
@@ -68,7 +52,9 @@ CREATE TABLE IF NOT EXISTS orders (
         product INTEGER REFERENCES Insertion(id) ON DELETE SET NULL,
         quantity INTEGER NOT NULL,
         customer INTEGER REFERENCES Customer(id) ON DELETE SET NULL,
-        instant_date TIMESTAMP DEFAULT now()
+        instant_date TIMESTAMP DEFAULT now(),
+        assigned BOOLEAN DEFAULT FALSE
+
 );
 
 CREATE TABLE IF NOT EXISTS Transporter (

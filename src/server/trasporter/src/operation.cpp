@@ -26,7 +26,7 @@ int newRegistrationMsg(redisReply *reply, redisContext *redis) {
 /*
 analyzes the message extracting the necessary informations that will be used to add
 the new shipping into the database. 
-*/
+
 int newShippingMsg(redisReply *reply, redisContext *redis) {
     redisReply *prima_reply = reply->element[0];
     redisReply *single_entry = prima_reply->element[1]->element[0];
@@ -42,6 +42,7 @@ int newShippingMsg(redisReply *reply, redisContext *redis) {
     }
 
 }
+*/
 
 /*
 analyzes the message extracting the necessary informations that will be used to search

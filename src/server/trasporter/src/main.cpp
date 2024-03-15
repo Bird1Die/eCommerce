@@ -31,8 +31,8 @@ int main(){
                 loginMsg(reply, redis); 
                 break;
             case 4:
-                cout << "New Shipping" << endl;
-                newShippingMsg(reply, redis);
+                cout << "Request new Shipping" << endl;
+                //newShippingMsg(reply, redis);
             }
         }
     } 
