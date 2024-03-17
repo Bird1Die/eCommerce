@@ -119,12 +119,27 @@ int requestShippingDB(int id_transporter) {
     "SELECT o.id FROM orders o WHERE o.assigned='false' ORDER BY o.instant_date ASC");
     PGresult *result = db.ExecSQLtuples(command);
     if (!((PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 )) {
-        return -1;
+        return -2;
     }
     int id_order = atoi(PQgetvalue(result, 0, 0));
     snprintf(command, sizeof(command),
     "INSERT INTO shipping (id_order, transporter) VALUES (%d, %d)", id_order, id_transporter);
     result = db.ExecSQLcmd(command);
+    if (PQresultStatus(result) != PGRES_COMMAND_OK) {
+        return -1;
+    }
+    return 0;
+}
+
+/*
+
+*/
+int changeShippingStatusDB(int id_shipping, string sh_status) {
+    char command[200];
+    Con2DB db = CreateDB();
+    snprintf(command, sizeof(command),
+    "UPDATE shipping SET shipping_status='%s' WHERE id=%d", sh_status.c_str(), id_shipping);
+    PGresult *result = db.ExecSQLcmd(command);
     if (PQresultStatus(result) != PGRES_COMMAND_OK) {
         return -1;
     }

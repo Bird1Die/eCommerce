@@ -17,10 +17,11 @@ int newShippingDB(string id_order);
 int queryShippingToTransporter();
 int loginDB(string username, string password);
 int requestShippingDB(int id_transporter);
+int changeShippingStatusDB(int id_shipping, string sh_status);
 
 //operation
 int newRegistrationMsg(redisReply *reply, redisContext *redis);
-//int newShippingMsg(redisReply *reply, redisContext *redis);
+int changeShippingStatusMsg(redisReply *reply, redisContext *redis);
 int loginMsg(redisReply *reply, redisContext *redis);
 int requestShippingMsg(redisReply *reply, redisContext *redis);
 
@@ -28,3 +29,4 @@ int requestShippingMsg(redisReply *reply, redisContext *redis);
 int messageReturnIdRedis(redisContext *redis, string id_entry, int iduser);
 int statusErrMessageRedis(redisContext *redis, string id_entry);
 int messageStatusOkRedis(redisContext *redis, string id_entry);
+int messageNoOrderAvailable(redisContext *redis, string id_entry);

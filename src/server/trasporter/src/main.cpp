@@ -24,7 +24,7 @@ int main(){
                 break;
             case 2:
                 cout << "Change shipping status" << endl;
-                //changeShippingStatusMsg(reply, redis);
+                changeShippingStatusMsg(reply, redis);
                 break;
             case 3: 
                 cout << "Login" << endl;   
@@ -32,7 +32,7 @@ int main(){
                 break;
             case 4:
                 cout << "Request new Shipping" << endl;
-                //newShippingMsg(reply, redis);
+                requestShippingMsg(reply, redis);
             }
         }
     } 
