@@ -80,6 +80,25 @@ public:
     int GetSales();
 };
 
+class Order{
+private:
+    int id;
+    string name;
+    float total_price;
+    int quantity;
+    string shipping_status;
+public:
+    Order(int id, string name, float price, int quantity, string shipping_status);
+    string ToString();
+    string Order::ToString(int name_C, int price_c, int quantity_c, int shipping_c);
+    int GetId();
+    string GetName();
+    float GetPrice();
+    int GetQuantity();
+    string GetShipping();
+};
+
+
 int ManageAuthenticationKwd(Context ctx, int comand);
 int ManageMainKwd(Context ctx, int comand);
 
@@ -95,7 +114,7 @@ int VisualizeOrders(Context ctx);
 // Operation
 
 vector<Insertion> GetProductList(Context ctx, string name);
-vector<Insertion> GetOrderList(Context ctx);
+vector<Order> GetOrderList(Context ctx);
 bool CreateOrder(Context ctx, Insertion ins, int quantity);
 
 // Authentication

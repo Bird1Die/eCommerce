@@ -85,6 +85,25 @@ string Insertion::ToString(int n_char, int n_price){
     return str;
 }
 
+Order::Order(int id, string name, float price, int quantity, string shipping_status){
+    this->id = id;
+    this->name = name;
+    this->total_price = price * quantity;
+    this->quantity = quantity;
+    this->shipping_status = shipping_status;
+}
+string Order::ToString(){
+    return "";
+}
+string Order::ToString(int name_C, int price_c, int quantity_c, int shipping_c){
+    return "";
+}
+int Order::GetId(){return this->id;}
+string Order::GetName(){return this->name;}
+float Order::GetPrice(){return this->total_price;}
+int Order::GetQuantity(){return this->quantity;}
+string Order::GetShipping(){return this->shipping_status;}
+
 char getch() {
         char buf = 0;
         struct termios old = {0};

@@ -104,8 +104,21 @@ int CreatingOrderService(Context ctx, Insertion ins){
 
 int VisualizeOrders(Context ctx){
     system("clear");
-    //char buf[500];
-    //snprintf(buf, sizeof(buf), 
-    //"SELECT i.product i.price o.quantity s.shipping_status FROM orders o JOIN insertion i ON i.id = o.product JOIN shipping s ON s.number_order = o.id WHERE o.customer = %d AND s.shipping_status = %s");
+    vector<Order> orders = GetOrderList(ctx);
+    int max_name;
+    int max_price;
+    int max_quantity;
+    int max_status;
+    for(long unsigned int i = 0; i < orders.size(); i++){
+        int name = orders[i].GetName().length();
+        int price = to_string(orders[i].GetPrice()).length();
+        int quantity = to_string(orders[i].GetQuantity()).length();
+        int status = orders[i].GetShipping().length();
+        if(name > max_name){max_name = name;}
+        if(price > max_price){max_price = price;}
+        if(quantity > max_quantity){max_quantity = quantity;}
+        if(status > max_status){max_status = status;}
+    }
+    
     return 0;
 }
