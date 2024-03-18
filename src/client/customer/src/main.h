@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <string>
 #include <cmath>
+#include <cstring>
 #include <termios.h>
 #include <stdio.h>
 #include <../../../../con2db/pgsql.h>
@@ -52,6 +53,7 @@ class Kwd_Man{
 private:
     vector<string> keywords;
     long unsigned int selected;
+    int size;
 public:
     Kwd_Man(vector<string> keywords);
     string ToString();
@@ -90,7 +92,7 @@ private:
 public:
     Order(int id, string name, float price, int quantity, string shipping_status);
     string ToString();
-    string Order::ToString(int name_C, int price_c, int quantity_c, int shipping_c);
+    string ToString(int name_C, int price_c, int quantity_c, int shipping_c);
     int GetId();
     string GetName();
     float GetPrice();
@@ -130,6 +132,7 @@ bool StringIsInLenght(string str, int min, int max);
 redisReply* GetFirstEntry(redisReply *reply);
 redisReply* GetFirstEntryElements(redisReply *reply);
 char getch();
+string OrderTableString(int name_c, int price_c, int quantity_c, int status_c);
 
 // Boh
 

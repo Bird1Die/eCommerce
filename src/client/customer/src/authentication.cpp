@@ -51,6 +51,7 @@ int Registration(Context ctx){
 }
 int Login(Context ctx){
     system("clear");
+    if(ctx.GetDebug()){return 1;}
 
     cout << "Username: ";
     string username;

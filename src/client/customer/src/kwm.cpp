@@ -3,6 +3,7 @@
 Kwd_Man::Kwd_Man(vector<string> keywords){
     this->keywords = keywords; 
     this->selected = 0;
+    this->size = this->keywords.size();
     }
 string Kwd_Man::ToString(){
     string str;
@@ -19,10 +20,10 @@ void Kwd_Man::Next(){
     this->selected = this->selected % this->keywords.size();
 }
 void Kwd_Man::Previous(){
-    this->selected--;
-    if(this->selected < 0){
-        this->selected = this->keywords.size() - 1;
+    if(this->selected == 0){
+        this->selected = this->size;
     }
+    this->selected -= 1;
 }
 int Kwd_Man::GetSelected(){
     return this->selected;
@@ -30,7 +31,6 @@ int Kwd_Man::GetSelected(){
 int Kwd_Man::GetComandId(){
     while(true){
         system("clear");
-
         cout << this->ToString() << endl;
         char c = getch();
         switch (c){

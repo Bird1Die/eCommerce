@@ -105,20 +105,36 @@ int CreatingOrderService(Context ctx, Insertion ins){
 int VisualizeOrders(Context ctx){
     system("clear");
     vector<Order> orders = GetOrderList(ctx);
-    int max_name;
-    int max_price;
-    int max_quantity;
-    int max_status;
+    int max_name = 0;
+    int max_price = 0;
+    int max_quantity = 0;
+    int max_status = 0;
     for(long unsigned int i = 0; i < orders.size(); i++){
         int name = orders[i].GetName().length();
-        int price = to_string(orders[i].GetPrice()).length();
-        int quantity = to_string(orders[i].GetQuantity()).length();
+        int price = to_string(int(orders[i].GetPrice())).length() + 3;
+        int quantity = to_string(int(orders[i].GetQuantity())).length();
         int status = orders[i].GetShipping().length();
         if(name > max_name){max_name = name;}
         if(price > max_price){max_price = price;}
         if(quantity > max_quantity){max_quantity = quantity;}
         if(status > max_status){max_status = status;}
     }
+    string name_t = "Name";
+    string price_t = "Price";
+    string quantity_t = "Qty";
+    string status_t = "Status";
+    max_name = max(max_name, int(name_t.length()));
+    max_price = max(max_price, int(price_t.length()));
+    max_quantity = max(max_quantity, int(quantity_t.length()));
+    max_status = max(max_status, int(status_t.length()));
+
+    cout << OrderTableString(max_name, max_price, max_quantity, max_status) << endl;
+    for(int i = 0; i < orders.size(); i++){
+        cout << orders[i].ToString(max_name, max_price, max_quantity, max_status) << endl;
+    }
+    cout << endl << "> Back" << endl;
+    string comand;
+    getline(cin, comand);
     
     return 0;
 }

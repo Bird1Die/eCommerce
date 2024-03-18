@@ -95,8 +95,39 @@ Order::Order(int id, string name, float price, int quantity, string shipping_sta
 string Order::ToString(){
     return "";
 }
-string Order::ToString(int name_C, int price_c, int quantity_c, int shipping_c){
-    return "";
+string Order::ToString(int name_c, int price_c, int quantity_c, int shipping_c){
+    string str;
+    str.append(this->name);
+    int ch = name_c - this->name.length();
+    for(int i = 0; i < ch; i++){
+        str.append(" ");
+    }
+
+    str.append(" | ");
+
+    char buf[500];
+    snprintf(buf, sizeof(buf), "%.2f", this->total_price);
+    ch = price_c - strlen(buf);
+    for(int i = 0; i < ch; i++){
+        str.append(" ");
+    }
+    str.append(buf);
+
+    str.append(" | ");
+
+
+    int quant = quantity_c - to_string(this->quantity).length();
+    for(int i = 0; i < quant; i++){str.append(" ");}
+    str.append(to_string(this->quantity));
+
+    str.append(" | ");
+
+    ch = shipping_c - this->shipping_status.length();
+    for(int i = 0; i < ch; i++){
+        str.append(" ");
+    }
+    str.append(this->shipping_status);
+    return str;
 }
 int Order::GetId(){return this->id;}
 string Order::GetName(){return this->name;}
@@ -172,4 +203,49 @@ int Spinner::GetQuantity(string msg){
         }
     }
     return 0;
+}
+
+string OrderTableString(int name_c, int price_c, int quantity_c, int status_c){
+    string str;
+    int name = name_c - 4;
+    int buf = name / 2;
+    for(int i = 0; i < buf; i++){str.append(" ");}
+    str.append("Name");
+    for(int i = 0; i < name - buf; i++){str.append(" ");}
+
+    str.append(" | ");
+
+    int price = price_c - 5;
+    buf = price / 2;
+    for(int i = 0; i < buf; i++){str.append(" ");}
+    str.append("Price");
+    for(int i = 0; i < price - buf; i++){str.append(" ");}
+
+    str.append(" | ");
+
+    int quantity = quantity_c - 3;
+    buf = quantity / 2;
+    for(int i = 0; i < buf; i++){str.append(" ");}
+    str.append("Qty");
+    for(int i = 0; i < quantity - buf; i++){str.append(" ");}
+
+    str.append(" | ");
+
+    int status = status_c - 6;
+    buf = status / 2;
+    for(int i = 0; i < buf; i++){str.append(" ");}
+    str.append("Status");
+    for(int i = 0; i < status - buf; i++){str.append(" ");}
+
+    str.append("\n");
+    for(int i = 0; i < name_c; i++){str.append("-");}
+    str.append(" | ");
+    for(int i = 0; i < price_c; i++){str.append("-");}
+    str.append(" | ");
+    for(int i = 0; i < quantity_c; i++){str.append("-");}
+    str.append(" | ");
+    for(int i = 0; i < status_c; i++){str.append("-");}
+
+    return str;
+
 }
