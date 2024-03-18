@@ -30,6 +30,7 @@ int Kwd_Man::GetSelected(){
 int Kwd_Man::GetComandId(){
     while(true){
         system("clear");
+
         cout << this->ToString() << endl;
         char c = getch();
         switch (c){

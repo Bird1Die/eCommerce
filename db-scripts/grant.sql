@@ -4,11 +4,6 @@
 -- user already exists
 GRANT ALL PRIVILEGES ON DATABASE :dbname to :username ;
 
-
-ALTER TABLE ShippingAddress OWNER TO :username ;
-
-ALTER TABLE CreditCard OWNER TO :username ;
-
 ALTER TABLE Customer OWNER TO :username ;
 
 ALTER TABLE Vendor OWNER TO :username ;
