@@ -11,13 +11,15 @@ int newRegistrationMsg(redisReply *reply, redisContext *redis) {
     string username = single_entry->element[1]->element[3]->str;
     string email = single_entry->element[1]->element[5]->str;
     string password = single_entry->element[1]->element[7]->str;
-    cout << "Entry: " << entry_number << ", username: " << username << ", email: " << email << ", password: " << password << endl;
+    system("clear");
     
     int id_vendor = newRegistrationDB(username, email, password); 
     if (id_vendor < 0) {
+        cout << "Error registartion new vendor." << endl;
         statusErrMessageRedis(redis, entry_number);
         return -1;
     }
+    cout << "New vendor created with id: " << id_vendor << ", username: " << username << ", email: " << email << ", password: " << password << endl;
     messageReturnIdRedis(redis, entry_number, id_vendor);
     return 0; 
 

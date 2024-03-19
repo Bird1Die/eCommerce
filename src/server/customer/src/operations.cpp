@@ -14,17 +14,16 @@ int newRegistrationMsg(redisReply *reply, redisContext *redis) {
     string shipping_address = single_entry->element[1]->element[9]->str;
 
     replace(shipping_address.begin(), shipping_address.end(), '_', ' ');
-    cout << "Entry: " << entry_number << ", username: " << username << ", email: " << email << ", password: " << password << ", shipping address: " << shipping_address << endl;
+    system("clear");
     
-    int id_vendor = newRegistrationDB(username, email, password, shipping_address); 
-    if (id_vendor < 0) {
+    int id_customer = newRegistrationDB(username, email, password, shipping_address); 
+    if (id_customer < 0) {
         cout << "Error creating new customer" << endl;
         statusErrMessageRedis(redis, entry_number);
         return -1;
     }
-    system("clear");
-    cout << "Successful operation" << endl;
-    messageReturnIdRedis(redis, entry_number, id_vendor);
+    cout << "New customer created with id: " << id_customer << ", username: " << username << ", email: " << email << endl;
+    messageReturnIdRedis(redis, entry_number, id_customer);
     return 0; 
 
 }
@@ -42,8 +41,7 @@ int newOrderMsg(redisReply *reply, redisContext *redis) {
     string quantity = single_entry->element[1]->element[5]->str;
     string id_customer = single_entry->element[1]->element[7]->str;
 
-    cout << "Entry: " << entry_number << ", id_product: " << id_product << ", quantity: " << quantity << ", id_customer: " << id_customer << endl;
-    
+    system("clear");
     int id_order = newOrderDB(id_product, quantity, id_customer);
 
     if (id_order < 0) {
@@ -51,7 +49,7 @@ int newOrderMsg(redisReply *reply, redisContext *redis) {
         statusErrMessageRedis(redis, entry_number);
         return -1;
     } else {
-        cout << "Order created, sendig message to the customer..." << endl;
+        cout << "Order created with id: " << id_order << ", quantity: " << quantity << ", id_customer: " << id_customer  << ". Sendig message to the customer..." << endl;
         messageStatusOkRedis(redis, entry_number);
         //da correggere con l'id del trasportatore disponibile (non occupato in altre consegne)
         messageToTransporter(redis, id_order);
@@ -71,12 +69,15 @@ int loginMsg(redisReply *reply, redisContext *redis) {
     string username = single_entry->element[1]->element[3]->str;
     string password = single_entry->element[1]->element[5]->str;
 
+    system("clear");
     int id = loginDB(username, password);
     if (id != -1) {
+        cout << "Successful operatio." << endl;
         cout << "Sending message to entry: " << entry_number << " with ID: " << id << endl;
         messageReturnIdRedis(redis, entry_number, id);
         return 0; 
     } else {
+        cout << "Error login" << endl;
         cout << "Sending message to entry: " << entry_number << " with negative result";
         statusErrMessageRedis(redis, entry_number);
         return -1;

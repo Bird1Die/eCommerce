@@ -79,6 +79,7 @@ login by searching within the database an entity with the same username and pass
 in the redis message. It returns id of the entity.
 */
 int loginDB(string username, string password) {
+    system("clear");
     cout << "Cerco l'utente: " << username << endl;
     char command[200];
     Con2DB db = CreateDB();
