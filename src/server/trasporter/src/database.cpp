@@ -73,25 +73,6 @@ int newShippingDB(string id_order) {
 }
 
 /*
-query to find a transporter with the fewest shipping loaded. It returns the transporter'id.
-
-int queryShippingToTransporter() {
-    Con2DB db = CreateDB();
-    char command[200];
-    snprintf(command, sizeof(command),
-    "Select t.id, count (s.id) as ship From transporter t left outer join shipping s on s.transporter = t.id group by t.id Order by ship asc");
-    
-    PGresult *result = db.ExecSQLtuples(command);
-    if (PQresultStatus(result) != PGRES_TUPLES_OK) {
-        return -1;
-    }
-
-    int id_transporter = atoi(PQgetvalue(result, 0, 0));
-    return id_transporter;
-}
-*/
-
-/*
 login by searching within the database an entity with the same username and password as given 
 in the redis message. It returns id of the entity.
 */
@@ -110,6 +91,10 @@ int loginDB(string username, string password) {
     return id;
 }
 
+/*
+query to search an order available for shipping. If there is one then a shipping is
+created.
+*/
 int requestShippingDB(int id_transporter) {
     system("clear");
     cout << "Cerco un ordine pronto per la spedizione..." << endl;
@@ -132,7 +117,7 @@ int requestShippingDB(int id_transporter) {
 }
 
 /*
-
+query to change the shipping status with the given status.
 */
 int changeShippingStatusDB(int id_shipping, string sh_status) {
     char command[200];

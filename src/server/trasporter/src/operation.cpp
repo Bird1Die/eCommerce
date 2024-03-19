@@ -26,7 +26,9 @@ int newRegistrationMsg(redisReply *reply, redisContext *redis) {
 }
 
 /*
-
+analyzes the message extracitng the information for the request shipping.
+If there is an order available for shipping, then the shipping is created and a message is sent to 
+the transporte who did the request. Otherwise it returns an error message.
 */
 int requestShippingMsg(redisReply *reply, redisContext *redis) {
     redisReply *prima_reply = reply->element[0];
@@ -75,7 +77,9 @@ int loginMsg(redisReply *reply, redisContext *redis) {
 }
 
 /*
-
+analyzes the message extracting the necessary informations that will be used to change the 
+shipping status. A message is sent to the redis transporter client to confirm the 
+successful operation or the error.
 */
 int changeShippingStatusMsg(redisReply *reply, redisContext *redis) {
     redisReply *prima_reply = reply->element[0];
