@@ -100,9 +100,11 @@ int requestShippingDB(int id_transporter) {
     cout << "Cerco un ordine pronto per la spedizione..." << endl;
     char command[200];
     Con2DB db = CreateDB();
+    sprintf(command, "BEGIN"); 
+    PGresult *result = db.ExecSQLtuples(command);
     snprintf(command, sizeof(command),
     "SELECT o.id FROM orders o WHERE o.assigned='false' ORDER BY o.instant_date ASC");
-    PGresult *result = db.ExecSQLtuples(command);
+    result = db.ExecSQLtuples(command);
     if (!((PQresultStatus(result) == PGRES_TUPLES_OK && PQntuples(result)) > 0 )) {
         return -2;
     }
@@ -113,6 +115,15 @@ int requestShippingDB(int id_transporter) {
     if (PQresultStatus(result) != PGRES_COMMAND_OK) {
         return -1;
     }
+
+    snprintf(command, sizeof(command),
+    "UPDATE orders SET assigned='true' WHERE id=%d", id_order);
+    result = db.ExecSQLcmd(command);
+    if (PQresultStatus(result) != PGRES_COMMAND_OK) {
+        return -1;
+    }
+    sprintf(command, "COMMIT"); 
+    PGresult *result = db.ExecSQLtuples(command);
     return 0;
 }
 
