@@ -53,7 +53,7 @@ int newRegistrationDB(string username, string email, string password) {
 /*
 create a new shipping within the databse with id_order received
 from the redis client.
-*/
+
 int newShippingDB(string id_order) {
     Con2DB db = CreateDB();
 
@@ -64,14 +64,14 @@ int newShippingDB(string id_order) {
 
     char command[200];
     snprintf(command, sizeof(command), 
-    "INSERT INTO shipping (number_order, transporter) VALUES (%d, %d)", id_order, id_transporter);
+    "INSERT INTO shipping (number_order, transporter) VALUES (%d, %d)", stoi(id_order), id_transporter);
     PGresult *result = db.ExecSQLcmd(command);
     if (PQresultStatus(result) != PGRES_COMMAND_OK) {
         return -1;
     }
     return 0;
 }
-
+*/
 /*
 login by searching within the database an entity with the same username and password as given 
 in the redis message. It returns id of the entity.
@@ -101,7 +101,7 @@ int requestShippingDB(int id_transporter) {
     char command[200];
     Con2DB db = CreateDB();
     sprintf(command, "BEGIN"); 
-    PGresult *result = db.ExecSQLtuples(command);
+    PGresult *result = db.ExecSQLcmd(command);
     snprintf(command, sizeof(command),
     "SELECT o.id FROM orders o WHERE o.assigned='false' ORDER BY o.instant_date ASC");
     result = db.ExecSQLtuples(command);
@@ -123,7 +123,7 @@ int requestShippingDB(int id_transporter) {
         return -1;
     }
     sprintf(command, "COMMIT"); 
-    PGresult *result = db.ExecSQLtuples(command);
+    result = db.ExecSQLcmd(command);
     return 0;
 }
 
