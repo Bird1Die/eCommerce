@@ -130,3 +130,5 @@ int changeShippingStatusDB(int id_shipping, string sh_status) {
     }
     return 0;
 }
+
+int queryShippingToTransporter(){return 1;}

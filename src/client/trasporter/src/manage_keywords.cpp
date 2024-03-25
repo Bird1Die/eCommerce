@@ -15,3 +15,21 @@ int ManageAuthenticationKwd(Context ctx, int comand){
     }
     return 0;
 }
+
+int ManageMainKwd(Context ctx, int comand){
+    int flag = 0;
+    switch (comand)
+    {
+    case 0:
+        flag = NewShipping(ctx);
+        break;
+    case 1:
+        flag = MyShippings(ctx);
+        break;
+    case 2:
+        return -1;
+    default:
+        break;
+    }
+    return flag;
+}

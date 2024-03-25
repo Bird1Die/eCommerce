@@ -38,3 +38,17 @@ char getch() {
                 perror ("tcsetattr ~ICANON");
         return (buf);
 }
+Shipping::Shipping(int id, string customer_name, string shipping_address, string product_name, int quantity, string status){
+        this->id = id;
+        this->customer_name = customer_name;
+        this->shipping_address = shipping_address;
+        this->product_name = product_name;
+        this->quantity = quantity;
+        this->status = status;
+}
+int Shipping::GetId(){return this->id;}
+string Shipping::GetShippingAddress(){return this->shipping_address;}
+string Shipping::GetProductName(){return this->product_name;}
+int Shipping::GetQuantity(){return this->quantity;}
+string Shipping::GetStatus(){return this->status;}
+void Shipping::SetStatus(string status){this->status = status;}

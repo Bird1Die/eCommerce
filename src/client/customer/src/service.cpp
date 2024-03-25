@@ -79,6 +79,7 @@ int VisualizeInsertion(Context ctx, Insertion ins){
         int id = kwd.GetComandId(buf);
         if(id == 1){return 0;}
         CreatingOrderService(ctx, ins); 
+        return 0;
     }
     return 0;
 }

@@ -28,6 +28,25 @@ class Context{
         void SetId(int id);
 };
 
+class Shipping{
+private:
+    int id;
+    string customer_name;
+    string shipping_address;
+    string product_name;
+    int quantity;
+    string status;
+public:
+    Shipping(int id, string customer_name, string shipping_address, string product_name, int quantity, string status);
+    int GetId();
+    string GetShippingAddress();
+    string GetProductName();
+    int GetQuantity();
+    string GetStatus();
+    void SetStatus(string status);
+    string ToString();
+};
+
 // Authentication
 
 int Registration(Context ctx);
@@ -36,10 +55,19 @@ int Login(Context ctx);
 // Service
 
 int AuthenticationService(Context ctx);
+int MainService(Context ctx);
+int NewShipping(Context ctx);
+int MyShippings(Context ctx);
+
+// Operation
+
+int NewShippingOrder(Context ctx);
+vector<Shipping> GetShippings(Context ctx);
 
 // Manage keyword
 
 int ManageAuthenticationKwd(Context ctx, int comand);
+int ManageMainKwd(Context ctx, int comand);
 
 class Kwd_Man{
 private:

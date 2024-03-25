@@ -16,12 +16,8 @@ int Registration(Context ctx){
     string password;
     getline(cin, password);
 
-    cout << "Shipping address: ";
-    string sa;
-    getline(cin, sa);
-
     redisReply *reply = (redisReply*) RedisCommand(ctx.GetRedis(), 
-    "XADD customer * operation_id 1 username %s email %s password %s shipping_address %s", username.c_str(), email.c_str(), password.c_str(), sa.c_str());
+    "XADD transporter * operation_id 1 username %s email %s password %s", username.c_str(), email.c_str(), password.c_str());
     string rid = reply->str;
 
     bool run = true;
@@ -47,6 +43,7 @@ int Registration(Context ctx){
 }
 
 int Login(Context ctx){
+    if(ctx.GetDebug()){return 1;}
     system("clear");
 
     cout << "Username: ";
@@ -58,7 +55,7 @@ int Login(Context ctx){
     getline(cin, password);
 
     redisReply *reply = (redisReply*) RedisCommand(ctx.GetRedis(),
-    "XADD customer * operation_id 3 username %s password %s", username.c_str(), password.c_str());
+    "XADD transporter * operation_id 3 username %s password %s", username.c_str(), password.c_str());
 
     string rid = reply->str;
     bool run = true;
