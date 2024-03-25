@@ -14,7 +14,6 @@ int main();
 Con2DB CreateDB();
 int newRegistrationDB(string username, string email, string password);
 int newShippingDB(string id_order);
-int queryShippingToTransporter();
 int loginDB(string username, string password);
 int requestShippingDB(int id_transporter);
 int changeShippingStatusDB(int id_shipping, string sh_status);
