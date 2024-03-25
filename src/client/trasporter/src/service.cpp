@@ -38,4 +38,8 @@ int NewShipping(Context ctx){
 }
 
 int MyShippings(Context ctx){ 
+    vector<Shipping> shippings = GetShippings(ctx);
+    for(int i = 0; i < shippings.size(); i++){
+        
+    }
 }
