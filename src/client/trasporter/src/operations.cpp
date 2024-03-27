@@ -34,3 +34,7 @@ vector<Shipping> GetShippings(Context ctx){
     }
     return shippings;
 }
+
+bool ChangeStatus(string status, int shipping_id){
+    
+}

@@ -47,8 +47,71 @@ Shipping::Shipping(int id, string customer_name, string shipping_address, string
         this->status = status;
 }
 int Shipping::GetId(){return this->id;}
+string Shipping::GetCustomerName(){return this->customer_name;}
 string Shipping::GetShippingAddress(){return this->shipping_address;}
 string Shipping::GetProductName(){return this->product_name;}
-int Shipping::GetQuantity(){return this->quantity;}
+int Shipping::GetQuantity(){return this->quantity;} 
 string Shipping::GetStatus(){return this->status;}
 void Shipping::SetStatus(string status){this->status = status;}
+string Shipping::ToString(int c_name, int c_quantity, int c_status, int c_address){
+        string buf;
+        buf.append(this->product_name);
+        for(int i = 0; i < c_name - this->product_name.length(); i++){buf.append(" ");}
+
+        buf.append(" | ");
+
+        for(int i = 0; i < c_quantity - to_string(this->quantity).length(); i++){buf.append(" ");}
+        buf.append(to_string(this->quantity));
+
+        buf.append(" | ");
+
+        for(int i = 0; i < c_status - this->status.length(); i++){buf.append(" | ");}
+        buf.append(this->status);
+
+        buf.append(" | ");
+
+        buf.append(this->shipping_address);
+        for(int i = 0; i < c_address - this->shipping_address.length(); i++){buf.append(" | ");}
+
+        return buf;
+}
+
+string GetTableIndentation(int name_c, int quantity_c, int status_c, int addres_c){
+        string buf;
+        int cbuf = (name_c - 4) / 2;
+        for(int i = 0; i < cbuf + 3; i++){buf.append(" ");}
+        buf.append("Name");
+        for(int i = 0; i < (name_c - 4) - cbuf; i++){buf.append(" ");}
+
+        buf.append(" | ");
+
+        cbuf = (quantity_c - 4) / 2;
+        for(int i = 0; i < cbuf; i++){buf.append(" ");}
+        buf.append("Qty.");
+        for(int i = 0; i < (quantity_c - 4) - cbuf; i++){buf.append(" ");}
+
+        buf.append(" | ");
+
+        cbuf = (status_c - 6) / 2;
+        for(int i = 0; i < cbuf; i++){buf.append(" ");}
+        buf.append("Status");
+        for(int i = 0; i < (status_c - 6) - cbuf; i++){buf.append(" ");}
+
+        buf.append(" | ");
+
+        cbuf = (addres_c - 7) / 2;
+        for(int i = 0; i < cbuf; i++){buf.append(" ");}
+        buf.append("Address");
+        for(int i = 0; i < (addres_c - 7) - cbuf; i++){buf.append(" ");}
+
+        buf.append("\n");
+
+        for(int i = 0; i < name_c + 3; i++){buf.append("-");}
+        buf.append("-|-");
+        for(int i = 0; i < quantity_c; i++){buf.append("-");}
+        buf.append("-|-");
+        for(int i = 0; i < status_c; i++){buf.append("-");}
+        buf.append("-|-");
+        for(int i = 0; i < addres_c; i++){buf.append("-");}
+        return buf;
+}

@@ -171,7 +171,7 @@ int Spinner::GetQuantity(){
                 this->quantity ++;
             case 68:
                 this->quantity --;
-                if(!this->negative && this->quantity < 0){this->quantity = 0;}
+                if(!this->negative && this->quantity <= 0){this->quantity = 1;}
         }
         return 0;
     }

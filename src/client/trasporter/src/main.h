@@ -39,12 +39,13 @@ private:
 public:
     Shipping(int id, string customer_name, string shipping_address, string product_name, int quantity, string status);
     int GetId();
+    string GetCustomerName();
     string GetShippingAddress();
     string GetProductName();
     int GetQuantity();
     string GetStatus();
     void SetStatus(string status);
-    string ToString();
+    string ToString(int c_name, int c_quantity, int c_status, int c_address);
 };
 
 // Authentication
@@ -58,16 +59,32 @@ int AuthenticationService(Context ctx);
 int MainService(Context ctx);
 int NewShipping(Context ctx);
 int MyShippings(Context ctx);
+int VisualizeShipping(Context ctx, Shipping s);
 
 // Operation
 
 int NewShippingOrder(Context ctx);
 vector<Shipping> GetShippings(Context ctx);
+bool ChangeStatus(string status, int shipping_id);
 
 // Manage keyword
 
 int ManageAuthenticationKwd(Context ctx, int comand);
 int ManageMainKwd(Context ctx, int comand);
+
+class V_Kwd_Man{
+private:
+    vector<string> keywords;
+    long unsigned int selected;
+public:
+    V_Kwd_Man(vector<string> keywords);
+    string ToString();
+    void Previous();
+    void Next();
+    int GetSelected();
+    int GetComandId();
+    int GetComandId(string msg);
+};
 
 class Kwd_Man{
 private:
@@ -90,4 +107,5 @@ public:
 void Notification(string message);
 redisReply* GetFirstEntry(redisReply *reply);
 redisReply* GetFirstEntryElements(redisReply *reply);
+string GetTableIndentation(int name_c, int quantity_c, int status_c, int addres_c);
 char getch();
