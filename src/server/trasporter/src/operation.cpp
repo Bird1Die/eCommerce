@@ -63,11 +63,11 @@ int loginMsg(redisReply *reply, redisContext *redis) {
     string entry_number = single_entry->element[0]->str;
     string username = single_entry->element[1]->element[3]->str;
     string password = single_entry->element[1]->element[5]->str;
-    system("clear");
     int id = loginDB(username, password);
     if (id != -1) {
         cout << "Login transporter with id " << id << endl;
         messageReturnIdRedis(redis, entry_number, id);
+        cout << "ho mandato il messaggio" << endl;
         return 0; 
     } else {
         cout << "Error login" << endl;
