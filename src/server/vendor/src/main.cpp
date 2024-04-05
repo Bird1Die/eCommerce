@@ -9,7 +9,7 @@ int main(){
     system("clear");
     bool run = true;
     while(run) {
-        redisReply *reply = (redisReply*) redisCommand(redis, "XRANGE transporter - + COUNT 1");
+        redisReply *reply = (redisReply*) redisCommand(redis, "XRANGE vendor - + COUNT 1");
         if (reply->elements != 0){
             redisReply *prima_reply = reply->element[0];
             string id_entry = prima_reply->element[0]->str;

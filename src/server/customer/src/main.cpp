@@ -8,7 +8,7 @@ int main() {
     bool run = true;
     while(run) {
         system("clear");
-        redisReply *reply = (redisReply*) redisCommand(redis, "XRANGE transporter - + COUNT 1");
+        redisReply *reply = (redisReply*) redisCommand(redis, "XRANGE customer - + COUNT 1");
         if (reply->elements != 0){
             redisReply *prima_reply = reply->element[0];
             string id_entry = prima_reply->element[0]->str;
@@ -28,7 +28,7 @@ int main() {
                     loginMsg(id_entry, prima_reply->element[1]->element[3]->str, prima_reply->element[1]->element[5]->str, redis); 
                     break;
                 }
-            redisCommand(redis, "XDEL transporter %s", id_entry.c_str());
+            redisCommand(redis, "XDEL customer %s", id_entry.c_str());
         }
     } 
     return 0;
