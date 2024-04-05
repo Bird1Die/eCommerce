@@ -1,26 +1,5 @@
 #include "main.h"
 
-void manageThread(string operation, redisReply *reply, redisContext *redis) {
-    switch (stoi(operation))
-            {
-            case 1: 
-                cout << "Registrazione" << endl;
-                newRegistrationMsg(reply, redis);
-                break;
-            case 2:
-                cout << "Change shipping status" << endl;
-                changeShippingStatusMsg(reply, redis);
-                break;
-            case 3: 
-                cout << "Login" << endl;   
-                loginMsg(reply, redis); 
-                break;
-            case 4:
-                cout << "Request new Shipping" << endl;
-                requestShippingMsg(reply, redis);
-            }
-}
-
 void inputListener(bool &run) {
     int ch;
     while (run) {

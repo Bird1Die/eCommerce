@@ -21,10 +21,10 @@ int requestShippingDB(int id_transporter);
 int changeShippingStatusDB(int id_shipping, string sh_status);
 
 // operation
-int newRegistrationMsg(redisReply *reply, redisContext *redis);
-int changeShippingStatusMsg(redisReply *reply, redisContext *redis);
-int loginMsg(redisReply *reply, redisContext *redis);
-int requestShippingMsg(redisReply *reply, redisContext *redis);
+int newRegistrationMsg(string id_entry, string username, string email, string password, redisContext *redis);
+int changeShippingStatusMsg(string entry_number, string id_shipping, string status, redisContext *redis);
+int loginMsg(string id_entry, string username, string password, redisContext *redis);
+int requestShippingMsg(string id_entry, string id_transporter, redisContext *redis);
 
 // utils
 int messageReturnIdRedis(redisContext *redis, string id_entry, int iduser);
@@ -33,6 +33,5 @@ int messageStatusOkRedis(redisContext *redis, string id_entry);
 int messageNoOrderAvailable(redisContext *redis, string id_entry);
 
 // thread
-void manageThread(string operation, redisReply *reply, redisContext *redis);
 void inputListener(bool &run);
 int redisListener(redisContext *redis, bool &run);
