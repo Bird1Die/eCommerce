@@ -18,15 +18,15 @@ int newOrderDB(string id_product, string quantity, string id_customer);
 int loginDB(string email, string password);
 
 // operation
-int newRegistrationMsg(redisReply *reply, redisContext *redis);
-int newOrderMsg(redisReply *reply, redisContext *redis);
-int loginMsg(redisReply *reply, redisContext *redis);
+int newRegistrationMsg(string entry_number, string username, string email, string password, string shipping_address, redisContext *redis);
+int newOrderMsg(string entry_number, string id_product, string quantity, string id_customer, redisContext *redis);
+int loginMsg(string entry_number, string username, string password, redisContext *redis);
 
 // utils
 int messageReturnIdRedis(redisContext *redis, string id_entry, int iduser);
 int statusErrMessageRedis(redisContext *redis, string id_entry);
 int messageStatusOkRedis(redisContext *redis, string id_entry);
-int messageToTransporter(redisContext *redis, int idorder);
+
 
 
 // thread

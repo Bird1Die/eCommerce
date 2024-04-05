@@ -29,13 +29,3 @@ int messageStatusOkRedis(redisContext *redis, string id_entry) {
     redisCommand(redis, "XADD %s * operation_id 3", id_entry.c_str());
     return 0;
 }
-
-/*
-message to redis transporter client to inform that a new order was created with the given id.
-*/
-int messageToTransporter(redisContext *redis, int idorder) {
-    sleep(1);
-    cout << "Sending message to transporter" << endl;
-    redisCommand(redis, "XADD transporter * operation_id 4 id_order %d", idorder);
-    return 0;
-}

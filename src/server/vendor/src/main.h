@@ -19,9 +19,9 @@ int newInsertionDB(string product_name, string price, string id_vendor);
 int loginDB(string email, string password);
 
 //operation
-int newRegistrationMsg(redisReply *reply, redisContext *redis);
-int newInsertionMsg(redisReply *reply, redisContext *redis);
-int loginMsg(redisReply *reply, redisContext *redis); 
+int newRegistrationMsg(string entry_number, string username, string email, string password, redisContext *redis);
+int newInsertionMsg(string entry_number, string product_name, string price, string id_vendor, redisContext *redis);
+int loginMsg(string entry_number, string username, string password, redisContext *redis); 
 
 //utils
 bool isNumerical(string str);
