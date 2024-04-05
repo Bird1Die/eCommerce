@@ -35,6 +35,28 @@ vector<Shipping> GetShippings(Context ctx){
     return shippings;
 }
 
-bool ChangeStatus(string status, int shipping_id){
-    
+bool ChangeStatus(Context ctx, Shipping s, int status_id){
+    system("clear");
+    cout << "Loading..." << endl;
+    string status;
+    switch (status_id){
+    case 0: status = "pendant"; break;
+    case 1: status = "delivering"; break;
+    case 2: status = "delivered"; break;
+    default: return false;}
+
+    char buf[500];
+    snprintf(buf, sizeof(buf), "XADD transporter * operation_id 2 id_shipping %d status %s", s.GetId(), status.c_str());
+    redisReply *reply;
+    reply = RedisCommand(ctx.GetRedis(), buf);
+    string rid = reply->str;
+    while(true){
+        reply = RedisCommand(ctx.GetRedis(), "XREAD COUNT 1 BLOCK 5000 STREAMS %s $", rid.c_str());
+        if(reply->elements == 0){continue;}
+        redisReply *elements = (redisReply*) GetFirstEntryElements(reply);
+        string result = elements->element[1]->str;
+        if(!result.compare("3")){return true;}
+        else{return false;}
+    }
+    return false;
 }

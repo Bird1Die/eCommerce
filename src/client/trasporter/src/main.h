@@ -60,12 +60,13 @@ int MainService(Context ctx);
 int NewShipping(Context ctx);
 int MyShippings(Context ctx);
 int VisualizeShipping(Context ctx, Shipping s);
+int ChangeStatusService(Context ctx, Shipping s);
 
 // Operation
 
 int NewShippingOrder(Context ctx);
 vector<Shipping> GetShippings(Context ctx);
-bool ChangeStatus(string status, int shipping_id);
+bool ChangeStatus(Context ctx, Shipping s, int status_id);
 
 // Manage keyword
 
@@ -74,6 +75,7 @@ int ManageMainKwd(Context ctx, int comand);
 
 class V_Kwd_Man{
 private:
+    int size;
     vector<string> keywords;
     long unsigned int selected;
 public:
@@ -88,6 +90,7 @@ public:
 
 class Kwd_Man{
 private:
+    int size;
     vector<string> keywords;
     long unsigned int selected;
 public:
@@ -100,7 +103,20 @@ public:
     int GetComandId(string msg);
 };
 
-
+class Spinner{
+private:
+    int size;
+    vector<string> keywords;
+    long unsigned int selected;
+public:
+    Spinner(vector<string> keywords);
+    string ToString();
+    void Previous();
+    void Next();
+    int GetSelected();
+    int GetComandId();
+    int GetComandId(string msg); 
+};
 
 // Util
 
@@ -108,4 +124,4 @@ void Notification(string message);
 redisReply* GetFirstEntry(redisReply *reply);
 redisReply* GetFirstEntryElements(redisReply *reply);
 string GetTableIndentation(int name_c, int quantity_c, int status_c, int addres_c);
-char getch();
+char getc();

@@ -19,7 +19,7 @@ int Context::GetId(){return this->id;}
 Con2DB Context::GetDB(){return this->db;}
 void Context::SetId(int id){this->id = id;}
 
-char getch() {
+char getc() {
         char buf = 0;
         struct termios old = {0};
         if (tcgetattr(0, &old) < 0)
@@ -65,13 +65,13 @@ string Shipping::ToString(int c_name, int c_quantity, int c_status, int c_addres
 
         buf.append(" | ");
 
-        for(int i = 0; i < c_status - this->status.length(); i++){buf.append(" | ");}
+        for(int i = 0; i < c_status - this->status.length(); i++){buf.append(" ");}
         buf.append(this->status);
 
         buf.append(" | ");
 
         buf.append(this->shipping_address);
-        for(int i = 0; i < c_address - this->shipping_address.length(); i++){buf.append(" | ");}
+        for(int i = 0; i < c_address - this->shipping_address.length(); i++){buf.append(" ");}
 
         return buf;
 }

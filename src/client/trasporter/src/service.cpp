@@ -84,6 +84,29 @@ int VisualizeShipping(Context ctx, Shipping s){
         Kwd_Man kwm = Kwd_Man({"Change status", "Back"});
         int comand = kwm.GetComandId(buf);
         if(comand == 1){return 0;}
-        
+        if(comand == 0){ChangeStatusService(ctx, s);}
     }
+}
+
+int ChangeStatusService(Context ctx, Shipping s){
+    string buf;
+    buf.append("Shipping\n\n");
+    buf.append("Customer name: ");
+    buf.append(s.GetCustomerName());
+    buf.append("\nProduct name: ");
+    buf.append(s.GetProductName());
+    buf.append("\nQuantity: ");
+    buf.append(to_string(s.GetQuantity()));
+    buf.append("\nAddress: ");
+    buf.append(s.GetShippingAddress());
+    buf.append("\n\nStatus: ");
+    buf.append(s.GetStatus());
+    buf.append("\n\n");
+    buf.append("Change status: ");
+
+    Spinner spin = Spinner({"pendant", "delivering", "delivered"});
+    int comand = spin.GetComandId(buf);
+    if(ChangeStatus(ctx, s, comand)){Notification("Correctly changed the status");}
+    else{Notification("Error while changing status");}
+    return 0;
 }

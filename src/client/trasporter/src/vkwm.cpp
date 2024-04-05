@@ -2,6 +2,7 @@
 
 V_Kwd_Man::V_Kwd_Man(vector<string> keywords){
     this->keywords = keywords;
+    this->size = this->keywords.size();
     this->selected = 0;
 }
 string V_Kwd_Man::ToString(){
@@ -16,10 +17,10 @@ string V_Kwd_Man::ToString(){
 }
 
 void V_Kwd_Man::Previous(){
-    this->selected--;
-    if(this->selected < 0){
-        this->selected = this->keywords.size() - 1;
+    if(this->selected == 0){
+        this->selected = this->size;
     }
+    this->selected -= 1;
 }
 void V_Kwd_Man::Next(){
     this->selected++;
@@ -32,7 +33,7 @@ int V_Kwd_Man::GetComandId(){
     while(true){
         system("clear");
         cout << this->ToString() << endl;
-        char c = getch();
+        char c = getc();
         switch (c){
         case 10:
             return this->selected;
@@ -52,7 +53,7 @@ int V_Kwd_Man::GetComandId(string msg){
         system("clear");
         cout << msg << endl;
         cout << this->ToString() << endl;
-        char c = getch();
+        char c = getc();
         switch (c){
         case 10:
             return this->selected;
