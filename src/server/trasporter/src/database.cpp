@@ -12,9 +12,6 @@ received from redis client. It returns the new vendor's id.
 */
 int newRegistrationDB(string username, string email, string password) {
     Con2DB db = CreateDB();
-
-    cout << "Username: " << username << endl << "Email: " << email << endl << "Password: "<< password <<endl;
-
     char command[200];
     sprintf(command, "BEGIN"); 
     PGresult *result = db.ExecSQLcmd(command);
@@ -51,28 +48,6 @@ int newRegistrationDB(string username, string email, string password) {
 }
 
 /*
-create a new shipping within the databse with id_order received
-from the redis client.
-
-int newShippingDB(string id_order) {
-    Con2DB db = CreateDB();
-
-    int id_transporter = queryShippingToTransporter();
-    if (id_transporter < 0) {
-        return -1;
-    }
-
-    char command[200];
-    snprintf(command, sizeof(command), 
-    "INSERT INTO shipping (number_order, transporter) VALUES (%d, %d)", stoi(id_order), id_transporter);
-    PGresult *result = db.ExecSQLcmd(command);
-    if (PQresultStatus(result) != PGRES_COMMAND_OK) {
-        return -1;
-    }
-    return 0;
-}
-*/
-/*
 login by searching within the database an entity with the same username and password as given 
 in the redis message. It returns id of the entity.
 */
@@ -97,7 +72,6 @@ created.
 */
 int requestShippingDB(int id_transporter) {
     system("clear");
-    cout << "Cerco un ordine pronto per la spedizione..." << endl;
     char command[200];
     Con2DB db = CreateDB();
     sprintf(command, "BEGIN"); 

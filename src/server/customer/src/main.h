@@ -7,6 +7,9 @@
 #include <cmath>
 #include <unistd.h>
 #include <thread>
+#include <atomic>
+#include <termios.h>
+#include <curses.h>
 using namespace std;
 
 int main();

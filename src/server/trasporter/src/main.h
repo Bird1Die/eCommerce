@@ -8,6 +8,10 @@
 #include <unistd.h>
 #include <thread>
 #include <ncurses.h>
+
+#include <csignal>
+#include <atomic>
+
 using namespace std;
 
 int main();
