@@ -13,8 +13,6 @@ received from redis client. It returns the new vendor's id.
 int newRegistrationDB(string username, string email, string password) {
     Con2DB db = CreateDB();
 
-    cout << "Username: " << username << endl << "Email: " << email << endl << "Password: "<< password <<endl;
-
     char command[200];
     sprintf(command, "BEGIN"); 
     PGresult *result = db.ExecSQLcmd(command);
@@ -85,7 +83,6 @@ login by searching within the database an entity with the same username and pass
 in the redis message. It returns id of the entity.
 */
 int loginDB(string username, string password) {
-    cout << "Cerco l'utente: " << username << endl;
     char command[200];
     Con2DB db = CreateDB();
     snprintf(command, sizeof(command), 

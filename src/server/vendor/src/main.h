@@ -6,6 +6,11 @@
 #include <algorithm>
 #include <cmath>
 #include <unistd.h>
+#include <atomic>
+#include <termios.h>
+#include <curses.h>
+#include <thread>
+
 using namespace std;
 
 int main();
