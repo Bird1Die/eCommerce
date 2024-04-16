@@ -1,9 +1,8 @@
 #include "main.h"
 
-void CustomerRegistation(redisContext *redis){
+void VendorRegistation(redisContext *redis){
     vector<string> CustomerUsernames = GetCustomerUsernameData(NTEST);
     vector<string> CustomerPasswords = GetCustomerPasswordData(NTEST);
-    srand(time(0));
     for(int i = 0; i < NTEST; i++){
         cout << "Test n." << i + 1 << "\t";
         string username = CustomerUsernames.at(i);
@@ -20,4 +19,7 @@ void CustomerRegistation(redisContext *redis){
         if(!result.compare("1")){cout << "SUCCESS" << endl;} else{cout << "FAIL" << endl;}
     }
     return;
+}
+
+void VendorCreateInsertions(redisContext *redis){
 }

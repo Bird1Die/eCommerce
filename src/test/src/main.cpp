@@ -1,12 +1,10 @@
 #include "main.h"
 
 int main(){
+    srand(time(0));
     redisContext *redis = redisConnect("localhost", 6379);
-    CustomerRegistation(redis);
-    return 0;
-}
 
-void signalHandler(int signum){
-    cout << "Signal: " << signum << endl << flush;
-    exit(0);
+    VendorRegistation(redis);
+
+    return 0;
 }

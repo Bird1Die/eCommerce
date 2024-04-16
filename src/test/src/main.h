@@ -19,12 +19,11 @@ int main();
 
 // Util
 
-void signalHandler(int signum);
 redisReply* GetFirstEntryElements(redisReply *reply);
 
 // Test
 
-void CustomerRegistation(redisContext *redis);
+void VendorRegistation(redisContext *redis);
 
 // Data retrieve
 

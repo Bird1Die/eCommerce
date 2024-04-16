@@ -32,12 +32,7 @@ clean:
 	rm -f ../bin/main
 	rm -f ../../../con2redis/obj/*.o *~ ../../../con2redis/src/*~ core 
 
-# Aggiungiamo un gestore di segnali per SIGINT (Ctrl+C)
-# Questo assicura che quando viene interrotto manualmente con Ctrl+C, verrà eseguito il target "clean"
-
-.PRECIOUS: $(BDIR)/main con2redis clean all
-.SILENT:
-.SHELLFLAGS = -ec
-.PHONY: safe
-safe:
-	trap 'make clean' SIGINT; make all
+push:
+	make clean
+	git commit --all
+	git push
