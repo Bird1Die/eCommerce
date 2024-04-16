@@ -67,13 +67,13 @@ int loginMsg(string entry_number, string username, string password, redisContext
     int id = loginDB(username, password);
     if (id != -1) {
         // move(0,0);
-        printw("Successful login");
+        printw("Successful login\n");
         refresh();
         messageReturnIdRedis(redis, entry_number, id);
         return 0; 
     } else {
         // move(0,0);
-        printw("Login failed");
+        printw("Login failed\n");
         refresh();
         statusErrMessageRedis(redis, entry_number);
         return -1;
