@@ -54,15 +54,15 @@ int main(){
             switch (stoi(operation_id))
                 {
                 case 1: 
-                    cout << "Registrazione" << endl;
+                    printw("Registrazione\n");
                     newRegistrationMsg(id_entry, prima_reply->element[1]->element[3]->str, prima_reply->element[1]->element[5]->str, prima_reply->element[1]->element[7]->str, redis);
                     break;
                 case 2:
-                    cout << "New Insertion" << endl;
+                    printw("New Insertion\n");
                     newInsertionMsg(id_entry, prima_reply->element[1]->element[3]->str, prima_reply->element[1]->element[5]->str, prima_reply->element[1]->element[7]->str, redis);
                     break;
                 case 3: 
-                    cout << "Login" << endl;   
+                    printw("Login\n");   
                     loginMsg(id_entry, prima_reply->element[1]->element[3]->str, prima_reply->element[1]->element[5]->str, redis); 
                     break;
                 }
