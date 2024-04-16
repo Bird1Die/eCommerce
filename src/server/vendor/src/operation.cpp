@@ -18,9 +18,9 @@ int newRegistrationMsg(string entry_number, string username, string email, strin
     }
     // clear();
     // move(0,0);
-    printw("New vendor created with \nId: %d\nUsername: %s\nEmail: %s\nPassword: %s\n", id_vendor, username.c_str(), email.c_str(), password.c_str());
-    refresh();
-    //cout << "New vendor created with id: " << id_vendor << ", username: " << username << ", email: " << email << ", password: " << password << endl;
+    // printw("New vendor created with \nId: %d\nUsername: %s\nEmail: %s\nPassword: %s\n", id_vendor, username.c_str(), email.c_str(), password.c_str());
+    // refresh();
+    cout << "New vendor created with id: " << id_vendor << ", username: " << username << ", email: " << email << ", password: " << password << endl << endl;
     messageReturnIdRedis(redis, entry_number, id_vendor);
     return 0; 
 
@@ -35,24 +35,21 @@ int newInsertionMsg(string entry_number, string product_name, string price, stri
     replace(product_name.begin(), product_name.end(), '_', ' ');
     // clear();
     // move(0,0);
-    printw("Creation new product...\n");
-    refresh();
+    // printw("Creation new product...\n");
+    cout << "Creation new product..." << endl; 
     int status = newInsertionDB(product_name, price, id_vendor);
     if (status != 0) {
-        printw("Error while creating the new product within the database\n");
-        refresh();
+        cout << "Error while creating the new product within the database" << endl;
         statusErrMessageRedis(redis, entry_number); 
         return -1;
     } else {
         messageStatusOkRedis(redis, entry_number);
-        printw("New product created with the following characteristics:\nProduct name: %s\nPrice: %s \nId_vendor: %s\n", product_name.c_str(), price.c_str(), id_vendor.c_str());
-        refresh();
-        /*
+        // printw("New product created with the following characteristics:\nProduct name: %s\nPrice: %s \nId_vendor: %s\n", product_name.c_str(), price.c_str(), id_vendor.c_str());
+        // refresh();  
         cout << "New product created with the following characteristics:" << endl;
         cout << "Product name: " << product_name  << endl;
         cout << "Price: " << price << endl;
-        cout << "Id_vendor: " << id_vendor << endl;
-        */
+        cout << "Id_vendor: " << id_vendor << endl << endl;
         return 0; 
     }
 }
@@ -66,15 +63,11 @@ int loginMsg(string entry_number, string username, string password, redisContext
     // clear();
     int id = loginDB(username, password);
     if (id != -1) {
-        // move(0,0);
-        printw("Successful login\n");
-        refresh();
+        cout << "Successful login" << endl;
         messageReturnIdRedis(redis, entry_number, id);
         return 0; 
     } else {
-        // move(0,0);
-        printw("Login failed\n");
-        refresh();
+        cout << "Login failed" << endl;
         statusErrMessageRedis(redis, entry_number);
         return -1;
     }

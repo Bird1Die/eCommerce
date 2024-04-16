@@ -1,5 +1,5 @@
 #include "main.h"
-
+/*
 std::atomic<bool> shouldExit(false); // Variabile atomica per indicare se il programma deve uscire
 
 bool kbhit() {
@@ -32,19 +32,23 @@ void listener() {
 char my_getch() {
     return static_cast<char>(wgetch(stdscr));
 }
+*/
+
 
 /*
 redis server listening requests from redis vendor client.
 */
 int main(){
+    /*
     initscr();
     cbreak();
     noecho();
     keypad(stdscr, TRUE);
+    */
 
     redisContext *redis = redisConnect("localhost", 6379);
     system("clear");
-    std::thread inputThread(listener);
+    // std::thread inputThread(listener);
     while(!shouldExit) {
         redisReply *reply = (redisReply*) redisCommand(redis, "XRANGE vendor - + COUNT 1");
         if (reply->elements != 0){
@@ -54,22 +58,22 @@ int main(){
             switch (stoi(operation_id))
                 {
                 case 1: 
-                    printw("Registrazione\n");
+                    cout << "Registrazione\n" << endl;
                     newRegistrationMsg(id_entry, prima_reply->element[1]->element[3]->str, prima_reply->element[1]->element[5]->str, prima_reply->element[1]->element[7]->str, redis);
                     break;
                 case 2:
-                    printw("New Insertion\n");
+                    cout << "New Insertion" << endl;
                     newInsertionMsg(id_entry, prima_reply->element[1]->element[3]->str, prima_reply->element[1]->element[5]->str, prima_reply->element[1]->element[7]->str, redis);
                     break;
                 case 3: 
-                    printw("Login\n");   
+                    cout << "Login"<< endl;
                     loginMsg(id_entry, prima_reply->element[1]->element[3]->str, prima_reply->element[1]->element[5]->str, redis); 
                     break;
                 }
                 redisCommand(redis, "XDEL vendor %s", id_entry.c_str());
             }
     } 
-    inputThread.join();
-    endwin();
+    // inputThread.join();
+    // endwin();
     return 0;
 }

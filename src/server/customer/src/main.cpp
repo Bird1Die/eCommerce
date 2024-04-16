@@ -1,6 +1,6 @@
 #include "main.h"
 
-
+/*
 std::atomic<bool> shouldExit(false); // Variabile atomica per indicare se il programma deve uscire
 
 bool kbhit() {
@@ -35,19 +35,20 @@ void listener() {
 char my_getch() {
     return static_cast<char>(wgetch(stdscr));
 }
-
+*/
 /*
 redis server listening requests from redis customer client.
 */
 int main() {
+    /*
     initscr();
     cbreak();
     noecho();
     keypad(stdscr, TRUE);
-
+    */ 
     redisContext *redis = redisConnect("localhost", 6379);
     system("clear");
-    std::thread inputThread(listener);
+    // std::thread inputThread(listener);
     while(!shouldExit) {
         redisReply *reply = (redisReply*) redisCommand(redis, "XRANGE customer - + COUNT 1");
         if (reply->elements != 0){
@@ -72,7 +73,7 @@ int main() {
             redisCommand(redis, "XDEL customer %s", id_entry.c_str());
         }
     } 
-    inputThread.join();
-    endwin();
+    // inputThread.join();
+    // endwin();
     return 0;
 }
