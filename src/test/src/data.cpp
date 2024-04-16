@@ -1,15 +1,15 @@
 #include "main.h"
 
-vector<string> GetCustomerUsernameData(int NTEST){
+vector<string> GetVendorUsernameData(int NTEST){
     vector<string> vec;
     vector<string> data;
-    ifstream file("../data/CustomerUsername.txt");
+    ifstream file("../data/VendorUsername.txt");
     if(!file.is_open()){cerr << "Impossibile aprire il file" << endl; return vec;}
     string line;
     while(getline(file, line)){
         vec.push_back(line);
     }
-    srand(time(0));
+
     size_t veclen = vec.size();
     string username;
     for(int i = 0; i < NTEST; i++){
@@ -25,7 +25,7 @@ vector<string> GetCustomerUsernameData(int NTEST){
     return data;
 }
 
-vector<string> GetCustomerPasswordData(int NTEST){
+vector<string> GetVendorPasswordData(int NTEST){
     vector<string> vec;
     string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     size_t charsetlen = charset.length();
@@ -46,7 +46,7 @@ vector<string> GetCustomerPasswordData(int NTEST){
     return vec;
 }
 
-string GetCustomerEmailData(string name){
+string GetVendorEmailData(string name){
     string charset = "0123456789";
     size_t charsetlen = charset.length();    
     string email = name;
@@ -58,4 +58,29 @@ string GetCustomerEmailData(string name){
     }
     email += "@gmail.com";
     return email;
+}
+
+vector<string> GetVendorProductNameData(int NTEST){
+    vector<string> vec;
+    vector<string> data;
+    ifstream file("../data/VendorProductName.txt");
+    if(!file.is_open()){cerr << "Impossibile aprire il file" << endl; return vec;}
+    string line;
+    while(getline(file, line)){
+        vec.push_back(line);
+    }
+    
+        size_t veclen = vec.size();
+    string username;
+    for(int i = 0; i < NTEST; i++){
+        if(vec.size() == 0){data.push_back("OutOfTests");}
+        username.clear();
+        username = vec.at(rand() % veclen);
+        data.push_back(username); 
+        auto it = find(vec.begin(), vec.end(), username);
+        vec.erase(it);
+        veclen = vec.size();
+    }
+
+    return data;
 }

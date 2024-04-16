@@ -23,12 +23,14 @@ redisReply* GetFirstEntryElements(redisReply *reply);
 
 // Test
 
-void VendorRegistation(redisContext *redis);
+vector<int> VendorRegistation(redisContext *redis);
+vector<int> VendorCreateInsertions(redisContext *redis, vector<int>);
 
 // Data retrieve
 
-vector<string> GetCustomerUsernameData(int NTEST);
-vector<string> GetCustomerPasswordData(int NTEST);
-string GetCustomerEmailData(string name);
+vector<string> GetVendorUsernameData(int NTEST);
+vector<string> GetVendorPasswordData(int NTEST);
+string GetVendorEmailData(string name);
+vector<string> GetVendorProductNameData(int NTEST);
 
  

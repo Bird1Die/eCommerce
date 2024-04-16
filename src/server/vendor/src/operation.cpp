@@ -20,7 +20,11 @@ int newRegistrationMsg(string entry_number, string username, string email, strin
     // move(0,0);
     // printw("New vendor created with \nId: %d\nUsername: %s\nEmail: %s\nPassword: %s\n", id_vendor, username.c_str(), email.c_str(), password.c_str());
     // refresh();
-    cout << "New vendor created with id: " << id_vendor << ", username: " << username << ", email: " << email << ", password: " << password << endl << endl;
+    cout << "New vendor created:" << endl;
+    cout << "\tId: " << id_vendor << endl;
+    cout << "\tUsername: " << username << endl;
+    cout << "\tEmail: " << email << endl;
+    cout << "\tPassword: " << password << endl << endl;
     messageReturnIdRedis(redis, entry_number, id_vendor);
     return 0; 
 
