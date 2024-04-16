@@ -25,6 +25,7 @@ con2db_OBJ=$(wildcard ../../../../con2db/*.o)
 
 all:	clean con2redis con2db $(BDIR)/main
 	cd ../bin; ./main
+	$(MAKE) -C . clean
 
 con2redis:
 	$(MAKE) -C ../../../../con2redis/src
