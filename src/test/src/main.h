@@ -9,6 +9,7 @@
 #include <fstream>
 #include <string>
 #include <csignal>
+#include <random>
 
 using namespace std;
 
@@ -21,16 +22,23 @@ int main();
 
 redisReply* GetFirstEntryElements(redisReply *reply);
 
-// Test
+// Test Vendor
 
 vector<int> VendorRegistation(redisContext *redis);
-vector<int> VendorCreateInsertions(redisContext *redis, vector<int>);
+void VendorCreateInsertion(redisContext *redis, vector<int> vendorIds);
+
+// Test Customer
+
+vector<int> CustomerRegistation(redisContext *redis);
+void CustomerCreateOrder(redisContext *redis, vector<int> customerIds);
 
 // Data retrieve
 
+vector<string> GetCustomerUsernameData(int NTEST);
 vector<string> GetVendorUsernameData(int NTEST);
-vector<string> GetVendorPasswordData(int NTEST);
+vector<string> GetPasswordData(int NTEST);
 string GetVendorEmailData(string name);
 vector<string> GetVendorProductNameData(int NTEST);
+float GetRandomPrice();
 
  

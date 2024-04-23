@@ -26,8 +26,7 @@ CREATE TABLE IF NOT EXISTS Customer (
         username String4VarName NOT NULL,
         password Password NOT NULL, 
         email String4Info NOT NULL,
-        shipping_address String4Info NOT NULL,
-        iscrizione TIMESTAMP DEFAULT now()
+        shipping_address String4Info NOT NULL;
 );
 
 CREATE TABLE IF NOT EXISTS Vendor (

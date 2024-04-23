@@ -25,7 +25,7 @@ vector<string> GetVendorUsernameData(int NTEST){
     return data;
 }
 
-vector<string> GetVendorPasswordData(int NTEST){
+vector<string> GetPasswordData(int NTEST){
     vector<string> vec;
     string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     size_t charsetlen = charset.length();
@@ -71,6 +71,45 @@ vector<string> GetVendorProductNameData(int NTEST){
     }
     
         size_t veclen = vec.size();
+    string username;
+    for(int i = 0; i < NTEST; i++){
+        if(vec.size() == 0){data.push_back("OutOfTests");}
+        username.clear();
+        username = vec.at(rand() % veclen);
+        data.push_back(username); 
+        auto it = find(vec.begin(), vec.end(), username);
+        vec.erase(it);
+        veclen = vec.size();
+    }
+
+    return data;
+}
+
+float GetRandomPrice(){
+    random_device rd;
+    mt19937 gen(rd());
+
+    float min_value = 0.5f;
+    float max_value = 1000.0f;
+
+    uniform_real_distribution<float> dis(min_value, max_value);
+
+    float random_float = dis(gen);
+
+    return random_float;
+}
+
+vector<string> GetCustomerUsernameData(int NTEST){
+    vector<string> vec;
+    vector<string> data;
+    ifstream file("../data/CustomerUsername.txt");
+    if(!file.is_open()){cerr << "Impossibile aprire il file" << endl; return vec;}
+    string line;
+    while(getline(file, line)){
+        vec.push_back(line);
+    }
+
+    size_t veclen = vec.size();
     string username;
     for(int i = 0; i < NTEST; i++){
         if(vec.size() == 0){data.push_back("OutOfTests");}
