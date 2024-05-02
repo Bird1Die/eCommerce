@@ -46,7 +46,7 @@ vector<string> GetPasswordData(int NTEST){
     return vec;
 }
 
-string GetVendorEmailData(string name){
+string GetEmailData(string name){
     string charset = "0123456789";
     size_t charsetlen = charset.length();    
     string email = name;
@@ -70,7 +70,7 @@ vector<string> GetVendorProductNameData(int NTEST){
         vec.push_back(line);
     }
     
-        size_t veclen = vec.size();
+    size_t veclen = vec.size();
     string username;
     for(int i = 0; i < NTEST; i++){
         if(vec.size() == 0){data.push_back("OutOfTests");}
@@ -122,4 +122,74 @@ vector<string> GetCustomerUsernameData(int NTEST){
     }
 
     return data;
+}
+
+vector<int> GetCustomerProductIds(Con2DB db, int size){
+    vector<int> allproductIds;
+    vector<int> productIds;
+    PGresult *result = db.ExecSQLtuples("SELECT id FROM Insertion");
+    for(int i = 0; i < PQntuples(result); i++){
+        int id = atoi(PQgetvalue(result, i, 0));
+        allproductIds.push_back(id);
+    }
+    int vecsize = allproductIds.size();
+    int id;
+    for(int i = 0; i < size; i++){
+        if(vecsize == 0){productIds.push_back(0);}
+        id = allproductIds.at(rand() % vecsize);
+        productIds.push_back(id);
+        auto it = find(allproductIds.begin(), allproductIds.end(), id);
+        allproductIds.erase(it);
+        vecsize = allproductIds.size();
+    }
+    return productIds;
+}
+
+vector<string> GetCustomerShippingAddress(int NTEST){
+    vector<string> vec;
+    vector<string> data;
+    ifstream file("../data/ShippingAddress.txt");
+    if(!file.is_open()){cerr << "Impossibile aprire il file" << endl; return data;}
+    string line;
+    while(getline(file, line)){
+        vec.push_back(line);
+    }
+    size_t veclen = vec.size();
+    string username;
+    for(int i = 0; i < NTEST; i++){
+        if(vec.size() == 0){data.push_back("OutOfTests");}
+        username.clear();
+        username = vec.at(rand() % veclen);
+        int civic = rand() % 400;
+        username += " ";
+        username += to_string(civic);
+        data.push_back(username); 
+        auto it = find(vec.begin(), vec.end(), username);
+        vec.erase(it);
+        veclen = vec.size();
+    }
+    return data; 
+}
+
+vector<string> GetTransporterUsernameData(int NTEST){
+    vector<string> vec;
+    vector<string> data;
+    ifstream file("../data/TransporterUsername.txt");
+    if(!file.is_open()){cerr << "Impossibile aprire il file" << endl; return data;}
+    string line;
+    while(getline(file, line)){
+        vec.push_back(line);
+    }
+    size_t veclen = vec.size();
+    string username;
+    for(int i = 0; i < NTEST; i++){
+        if(vec.size() == 0){data.push_back("OutOfTests");}
+        username.clear();
+        username = vec.at(rand() % veclen);
+        data.push_back(username); 
+        auto it = find(vec.begin(), vec.end(), username);
+        vec.erase(it);
+        veclen = vec.size();
+    }
+    return data; 
 }

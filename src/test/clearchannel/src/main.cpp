@@ -1,11 +1,12 @@
 #include "main.h"
 
 int main(){
-    string channel = "vendor";
+    string channels[3] = {"vendor", "customer", "transporter"};
     redisContext *redis = redisConnect("localhost", 6379);
     redisReply *reply;
     cout << "Avvio" << endl;
-    while(1){
+    for(string channel: channels){
+        while(1){
         reply = (redisReply*) redisCommand(redis, "XRANGE %s - + COUNT 1", channel.c_str());
         cout << "Richiesta reply" << endl;
         if(reply->elements == 0){
@@ -16,6 +17,6 @@ int main(){
         cout << "Rid: " << rid << endl;
         reply = (redisReply*) redisCommand(redis, "XDEL %s %s", channel.c_str(),rid.c_str());
         cout << "Cancello reply" << endl;
-
+        }
     }
 }

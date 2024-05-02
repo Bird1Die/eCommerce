@@ -49,7 +49,7 @@ int main() {
     redisContext *redis = redisConnect("localhost", 6379);
     system("clear");
     // std::thread inputThread(listener);
-    while(!shouldExit) {
+    while(true) {
         redisReply *reply = (redisReply*) redisCommand(redis, "XRANGE customer - + COUNT 1");
         if (reply->elements != 0){
             redisReply *prima_reply = reply->element[0];
