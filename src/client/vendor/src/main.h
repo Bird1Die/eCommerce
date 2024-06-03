@@ -33,10 +33,11 @@ class Context{
 
 class Kwd_Man{
 private:
+    int size;
     vector<string> keywords;
-    int selected;
+    long unsigned int selected;
 public:
-    Kwd_Man(vector<string>);
+    Kwd_Man(vector<string> keywords);
     string ToString();
     void Previous();
     void Next();

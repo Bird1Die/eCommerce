@@ -59,14 +59,16 @@ int CreateInsertion(Context ctx){
     }
     float tronc = round(price * pow(10, 2)) / pow(10, 2);
 
-    system("clear");
-    cout << "Recap product" << endl << endl;
-    cout << "Name: " << name << endl;
-    cout << "Price: " << tronc << "$" << endl << endl;
-    cout << "Add this insertion? (Y/n)" << endl;
+    string buf;
+    buf.append("Recap product\n\n");
+    buf.append("Name: ");
+    buf.append(name);
+    buf.append("\nPrice: ");
+    buf.append(to_string(tronc));
+    buf.append("$\n\nAdd this insertion?\n");
 
-    Kwd_Man kw = Kwd_Man({"Y", "n"});
-    int comand = kw.GetComandId();
+    Kwd_Man kw = Kwd_Man({"Yes", "no"});
+    int comand = kw.GetComandId(buf);
     if(comand == 0){
         int flag = AddInsertion(ctx, name, tronc);
         if(flag == 0){

@@ -1,6 +1,10 @@
 #include "main.h"
 
-Kwd_Man::Kwd_Man(vector<string> keywords){this->keywords = keywords; this->selected = 0;}
+Kwd_Man::Kwd_Man(vector<string> keywords){
+    this->keywords = keywords; 
+    this->size = this->keywords.size();
+    this->selected = 0;
+    }
 string Kwd_Man::ToString(){
     string str;
     for(long unsigned int i = 0; i < this->keywords.size(); i++){
@@ -16,10 +20,10 @@ void Kwd_Man::Next(){
     this->selected = this->selected % this->keywords.size();
 }
 void Kwd_Man::Previous(){
-    this->selected--;
-    if(this->selected < 0){
-        this->selected = this->keywords.size() - 1;
+    if(this->selected == 0){
+        this->selected = this->size;
     }
+    this->selected -= 1;
 }
 int Kwd_Man::GetSelected(){
     return this->selected;
@@ -46,6 +50,7 @@ int Kwd_Man::GetComandId(){
 int Kwd_Man::GetComandId(string msg){
     while(true){
         system("clear");
+        cout << msg << endl;
         cout << this->ToString() << endl;
         char c = getch();
         switch (c){
